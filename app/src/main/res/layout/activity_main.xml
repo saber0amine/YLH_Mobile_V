@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Plan your trips"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="100dp"
+
+        android:textStyle="bold|normal"
+         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Navigate destinations effortlessly"
+        android:layout_marginTop="-20dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="italic"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/welcome_image" />
+
+
+    <ImageButton
+        android:id="@+id/GetStartedButton"
+        android:layout_width="428dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_welcome_color"
+         android:scaleType="centerInside"
+        android:src="@drawable/img_1" />
+
+</LinearLayout>
