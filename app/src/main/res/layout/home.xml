@@ -17,7 +17,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
+
+        <TextView
+            android:id="@+id/HomeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Plan your next trip with YALLAH "
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:hint="Enter a city"
+
+
+            />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="50dp"
+
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="Search"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
     </FrameLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
