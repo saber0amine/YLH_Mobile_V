@@ -1,6 +1,7 @@
 package com.example.yallah_project.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
  import android.view.View;
 import android.widget.Button;
@@ -59,6 +60,7 @@ CheckUserLogin() ;
             LiveData<User> userLiveData = userViewModel.getUserByEmailAndPassword(email, password);
             userLiveData.observe(this, user -> {
                 if (user != null) {
+                    storeUserInformation(user);
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
@@ -69,18 +71,14 @@ CheckUserLogin() ;
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    private void storeUserInformation(User user) {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("user_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", user.getName());
+        editor.putString("email", user.getEmail());
+        editor.putString("password", user.getPassword());
+        editor.apply();
+    }
 
 
 }

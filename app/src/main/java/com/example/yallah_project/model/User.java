@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -105,6 +106,18 @@ public class User  implements Parcelable {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                ", profilePicture=" + Arrays.toString(profilePicture) +
+                ", role=" + role +
+                '}';
+    }
 
     protected User(Parcel in) {
         id = (UUID) in.readSerializable();

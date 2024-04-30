@@ -32,4 +32,6 @@ LiveData<List<User>> getAll();
 
  @Query("SELECT * FROM User WHERE email = :email AND password = :password LIMIT 1")
 LiveData<User> getUserByEmailAndPassword(String email, String password);
+
+
 }

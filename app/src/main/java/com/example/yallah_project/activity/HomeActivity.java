@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,11 +17,13 @@ import com.example.yallah_project.R;
 import com.example.yallah_project.databinding.HomeBinding;
 import com.example.yallah_project.model.User;
 
+import java.net.UnknownServiceException;
+
 public class HomeActivity extends BaseActivity  implements  View.OnClickListener{
 
     HomeBinding binding ;
     private TextView username ;
-    private ImageButton profilePicture ;
+    private ImageView profilePicture ;
     private Button menuButton ;
 private Button switch_to_organisateur_button ;
     @Override
@@ -30,7 +33,7 @@ private Button switch_to_organisateur_button ;
         setContentView(binding.getRoot());
         username  = findViewById(R.id.username) ;
          switch_to_organisateur_button = findViewById(R.id.switch_to_organisateur_button) ;
-         profilePicture = findViewById(R.id.profile_picture) ;
+         profilePicture = findViewById(R.id.profilePicture) ;
                  profilePicture.setOnClickListener(this);
          menuButton = findViewById(R.id.menu_button);
          menuButton.setOnClickListener(this);
@@ -65,11 +68,12 @@ private Button switch_to_organisateur_button ;
               intent = new Intent(HomeActivity.this, OrganizerRegistrationActivity.class) ;
             startActivity(intent) ;
         }
-        if (v.getId() == R.id.profile_picture) {
-            User user = getIntent().getParcelableExtra("user");
-            intent = new Intent(HomeActivity.this, ProfileActivity.class);
-            intent.putExtra("user", user);
-            startActivity(intent);
+        if (v.getId() == R.id.profilePicture) {
+            User userAuthenticated = getUserAuthenticated();
+                  intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                intent.putExtra("user", userAuthenticated);
+                startActivity(intent);
+
         }
         if (v.getId() == R.id.menu_button) {
             openOptionsMenu();
