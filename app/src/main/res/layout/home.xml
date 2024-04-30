@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
 
     <FrameLayout
@@ -19,14 +19,25 @@
 
 
         <TextView
-            android:id="@+id/HomeText"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Plan your next trip with YALLAH "
+            android:layout_marginLeft="10dp"
             android:textSize="18dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/switch_to_organisateur_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+
+            android:background="@color/red"
+            android:padding="10dp"
+            android:text="Switch"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <EditText
             android:layout_width="match_parent"
@@ -50,10 +61,7 @@
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:textStyle="bold" />
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+
 
     </FrameLayout>
 

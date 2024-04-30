@@ -1,4 +1,4 @@
-package com.example.yallah_project;
+package com.example.yallah_project.activity;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.yallah_project.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyActivitiesFragment#newInstance} factory method to
+ * Use the {@link MyRoomsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyActivitiesFragment extends Fragment {
+public class MyRoomsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class MyActivitiesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MyActivitiesFragment() {
+    public MyRoomsFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class MyActivitiesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyActivitiesFragment.
+     * @return A new instance of fragment MyRoomsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyActivitiesFragment newInstance(String param1, String param2) {
-        MyActivitiesFragment fragment = new MyActivitiesFragment();
+    public static MyRoomsFragment newInstance(String param1, String param2) {
+        MyRoomsFragment fragment = new MyRoomsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class MyActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_activities, container, false);
+        return inflater.inflate(R.layout.fragment_my_rooms, container, false);
     }
 }

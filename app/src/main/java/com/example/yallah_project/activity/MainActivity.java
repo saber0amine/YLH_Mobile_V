@@ -1,11 +1,15 @@
-package com.example.yallah_project;
+package com.example.yallah_project.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.yallah_project.R;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 

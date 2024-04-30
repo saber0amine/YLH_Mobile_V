@@ -16,57 +16,73 @@
 
 
         />
+
+
     <TextView
         android:id="@+id/LoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Yallah"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:textFontWeight="@integer/material_motion_duration_long_1"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
+        android:text="@string/welcome_to_yallah"
+        android:textFontWeight="@integer/material_motion_duration_short_1"
+        android:textSize="20dp"
+        android:textStyle="bold"
 
 
         />
 
+<RadioGroup
+    android:id="@+id/identityType"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-
-    <EditText
-        android:id="@+id/LoginEmail"
-        android:layout_width="300dp"
+    <RadioButton
+        android:id="@+id/identityCardOption"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:text="Identity Card"
         android:layout_marginLeft="40dp"
-        android:hint="Enter your email ?"
         />
 
-    <EditText
-        android:id="@+id/LoginPassword"
-        android:layout_width="300dp"
+    <RadioButton
+        android:id="@+id/passportOption"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
-        android:hint="Enter your password ?"
-        />
+        android:text="Passport"
+        android:layout_marginLeft="100dp"
 
+        />
+</RadioGroup>
+
+    <ImageView
+        android:id="@+id/identityImage"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:scaleType="centerCrop" />
+
+<Button
+    android:id="@+id/uploadButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Upload Image" />
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/LoginButton"
+            android:id="@+id/SumbitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:layout_marginTop="70dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="70dp"
             android:background="@color/colorPrimary"
+            android:text="Sumbit"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -74,26 +90,21 @@
             />
 
         <Button
-            android:id="@+id/RegisterButton"
+            android:id="@+id/BackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"
-            style="@style/Widget.AppCompat.Button.Colored"
-
-            android:layout_marginTop="70dp"
             android:layout_marginLeft="100dp"
+            android:layout_marginTop="70dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/white"
             android:padding="10dp"
+            android:text="Back "
+            android:textColor="@color/white"
             android:textSize="20dp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
 
-
-
-   <TextView
-        android:id="@+id/LoginErrors"
+    <TextView
+        android:id="@+id/Errors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

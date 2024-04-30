@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="profileCardView" type="id" />
+    <item name="profileImageView" type="id" />
+    <item name="nameTextView" type="id" />
+    <item name="emailTextView" type="id" />
+    <item name="ageTextView" type="id" />
+    <item name="editProfileButton" type="id" />
 </resources>
