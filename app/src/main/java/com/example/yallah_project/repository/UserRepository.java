@@ -43,6 +43,12 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
     return userDao.getUserByEmailAndPassword(email, password);
 }
 
+    public void update(User user) {
+        executorService.execute(() -> {
+            userDao.update(user);
+        });
+    }
+
 
     private static class insertAsyncTask extends AsyncTask<User, Void, Void> {
         private UserDao asyncTaskDao;

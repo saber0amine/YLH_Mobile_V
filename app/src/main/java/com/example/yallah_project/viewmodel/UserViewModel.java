@@ -34,4 +34,7 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
 }
 
 
+    public void update(User user) {
+        userRepository.update(user);
+    }
 }

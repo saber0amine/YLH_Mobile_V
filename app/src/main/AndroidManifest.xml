@@ -25,6 +25,7 @@
         <activity android:name="com.example.yallah_project.activity.RegisterActivity" />
         <activity android:name="com.example.yallah_project.activity.HomeActivity" />
         <activity android:name="com.example.yallah_project.activity.ProfileActivity"/>
+        <activity android:name="com.example.yallah_project.activity.OrganizerRegistrationActivity"/>
     </application>
 
 </manifest>

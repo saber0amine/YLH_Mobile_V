@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,111 +6,114 @@
     android:background="@drawable/button_welcome_color">
 
     <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="140dp"
-        android:src="@drawable/img_1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-40dp"
-
-
-        />
-
+        android:id="@+id/logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/img_1" />
 
     <TextView
         android:id="@+id/LoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
         android:text="@string/welcome_to_yallah"
-        android:textFontWeight="@integer/material_motion_duration_short_1"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-
-        />
-
-<RadioGroup
-    android:id="@+id/identityType"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <RadioButton
-        android:id="@+id/identityCardOption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Identity Card"
-        android:layout_marginLeft="40dp"
-        />
-
-    <RadioButton
-        android:id="@+id/passportOption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Passport"
-        android:layout_marginLeft="100dp"
-
-        />
-</RadioGroup>
-
-    <ImageView
-        android:id="@+id/identityImage"
+    <RadioGroup
+        android:id="@+id/identityType"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/identityCardOption"
+        android:layout_marginTop="16dp"
+        android:gravity="center">
 
-<Button
-    android:id="@+id/uploadButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Upload Image" />
+        <RadioButton
+            android:id="@+id/identityCardOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Identity Card" />
 
+        <RadioButton
+            android:id="@+id/passportOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passport"
+            android:layout_marginLeft="16dp" />
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/identityImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/baseline_add_card_24"
+             android:layout_marginBottom="16dp" />
+
+        <ImageView
+            android:id="@+id/uploadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_photo_alternate_24"
+            android:contentDescription="Upload Image"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/uploadLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Image"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <Button
             android:id="@+id/SumbitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="70dp"
-            android:background="@color/colorPrimary"
-            android:text="Sumbit"
-            android:textColor="@color/white"
-            android:textSize="20dp"
+            android:text="Submit"
+            android:textSize="18sp"
             android:textStyle="bold"
-
-            />
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp" />
 
         <Button
             android:id="@+id/BackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="70dp"
-            android:background="@color/colorPrimary"
-            android:padding="10dp"
-            android:text="Back "
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:text="Back"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/black"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp" />
+        <TextView
+            android:id="@+id/Errors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+             android:textColor="@color/red"
+             android:textStyle="bold"
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/Errors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        />
 
 </LinearLayout>

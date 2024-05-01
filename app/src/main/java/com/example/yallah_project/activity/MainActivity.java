@@ -8,13 +8,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.yallah_project.R;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
-    private ImageButton getStartedButton;
+    private Button getStartedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

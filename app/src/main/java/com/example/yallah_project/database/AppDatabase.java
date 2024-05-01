@@ -11,7 +11,7 @@ import com.example.yallah_project.dao.UserDao;
 import com.example.yallah_project.model.User;
 import com.example.yallah_project.model.Converters;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class}, version = 2)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
@@ -25,6 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "yallah_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

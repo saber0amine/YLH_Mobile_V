@@ -20,7 +20,6 @@ import com.example.yallah_project.model.User;
 import java.net.UnknownServiceException;
 
 public class HomeActivity extends BaseActivity  implements  View.OnClickListener{
-
     HomeBinding binding ;
     private TextView username ;
     private ImageView profilePicture ;
@@ -37,8 +36,7 @@ private Button switch_to_organisateur_button ;
                  profilePicture.setOnClickListener(this);
          menuButton = findViewById(R.id.menu_button);
          menuButton.setOnClickListener(this);
-
-
+switch_to_organisateur_button.setOnClickListener(this);
 
 
 
@@ -64,13 +62,15 @@ private Button switch_to_organisateur_button ;
     @Override
     public void onClick(View v) {
         Intent intent ;
+        User     userAuthenticated = getUserAuthenticated();
+
         if (v.getId() == R.id.switch_to_organisateur_button) {
               intent = new Intent(HomeActivity.this, OrganizerRegistrationActivity.class) ;
             startActivity(intent) ;
         }
         if (v.getId() == R.id.profilePicture) {
-            User userAuthenticated = getUserAuthenticated();
-                  intent = new Intent(HomeActivity.this, ProfileActivity.class);
+
+            intent = new Intent(HomeActivity.this, ProfileActivity.class);
                 intent.putExtra("user", userAuthenticated);
                 startActivity(intent);
 
@@ -78,6 +78,15 @@ private Button switch_to_organisateur_button ;
         if (v.getId() == R.id.menu_button) {
             openOptionsMenu();
         }
+
+        if(v.getId() == R.id.switch_to_organisateur_button) {
+
+            intent = new Intent(HomeActivity.this, OrganizerRegistrationActivity.class);
+            intent.putExtra("user",  userAuthenticated);
+            startActivity(intent);
+
+        }
+
 
     }
 }

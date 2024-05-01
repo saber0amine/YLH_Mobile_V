@@ -9,6 +9,7 @@ import androidx.room.*;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -35,7 +36,11 @@ public class User  implements Parcelable {
      @ColumnInfo(name = "role")
     private UserRole role;
 
-    // List<Activity> bookedActivities; // Room doesn't support object references between entities. You'll need to create another table to manage the relationship.
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "UserIdentity")
+    private byte[]  IdentityPicture;
+
+@ColumnInfo(name = "governmentIdType")
+    GovernmentIdType governmentIdType;
 
     public User() {
         this.id = UUID.randomUUID();
@@ -106,6 +111,25 @@ public class User  implements Parcelable {
         this.password = password;
     }
 
+
+    public byte[] getIdentityPicture() {
+        return IdentityPicture;
+    }
+
+    public void setIdentityPicture(byte[] identityPicture) {
+        IdentityPicture = identityPicture;
+    }
+
+    public GovernmentIdType getGovernmentIdType() {
+        return governmentIdType;
+    }
+
+    public void setGovernmentIdType(GovernmentIdType governmentIdType) {
+        this.governmentIdType = governmentIdType;
+    }
+
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -156,7 +180,11 @@ public class User  implements Parcelable {
         parcel.writeLong(age != null ? age.getTime() : -1);
         parcel.writeByteArray(profilePicture);
         parcel.writeSerializable(role);
+        parcel.writeByteArray(IdentityPicture);
     }
+
+
+
 }
 
 

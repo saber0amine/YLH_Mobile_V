@@ -45,10 +45,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText registerAge ;
      private TextView registerError ;
 
-     private Button uploadButton2 ;
+     private ImageView uploadButton2 ;
 
      private Bitmap profileBitmap ;
-     private ImageView ProfilePicture ;
+     private de.hdodenhof.circleimageview.CircleImageView ProfilePicture ;
 
      private UserViewModel userViewModel ;
 

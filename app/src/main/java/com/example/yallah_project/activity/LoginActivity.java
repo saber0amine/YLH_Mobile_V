@@ -33,9 +33,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         loginErrors = findViewById(R.id.LoginErrors) ;
         findViewById(R.id.LoginButton).setOnClickListener(this); ;
         registerButton.setOnClickListener( this ) ;
-
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class) ;
-
     }
 
     @Override
