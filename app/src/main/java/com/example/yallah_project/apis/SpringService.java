@@ -1,4 +1,4 @@
-package com.example.yallah_project.activity;
+package com.example.yallah_project.apis;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

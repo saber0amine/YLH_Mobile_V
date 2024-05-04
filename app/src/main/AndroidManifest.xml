@@ -28,6 +28,7 @@
         <activity android:name="com.example.yallah_project.activity.HomeActivity" />
         <activity android:name="com.example.yallah_project.activity.OrganizerRegistrationActivity"/>
         <activity android:name="com.example.yallah_project.activity.nav_layout_all"/>
+        <activity android:name="com.example.yallah_project.activity.RegisterRest"/>
     </application>
 
 </manifest>
