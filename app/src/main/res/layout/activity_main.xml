@@ -12,6 +12,21 @@
         android:orientation="vertical"
         tools:context=".activity.MainActivity">
 
+        <Button
+            android:id="@+id/SpringResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:background="@drawable/rounded_button"
+            android:text="Get SPRING"
+            android:textColor="@color/white"
+             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/HereSpringResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textStyle="bold|normal" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

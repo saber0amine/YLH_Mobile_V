@@ -3,4 +3,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Second</string>
     <string name="welcome_to_yallah">Let\'s add your government ID to verify your identity. You can upload an official document such as a passport, or national identity card. This helps us ensure that you are a legitimate user and comply with our security measures</string>
+    <string name="open_nav" />
+    <string name="close_nav" />
 </resources>

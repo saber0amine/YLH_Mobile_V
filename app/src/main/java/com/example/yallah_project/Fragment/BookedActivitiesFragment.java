@@ -1,4 +1,4 @@
-package com.example.yallah_project.activity;
+package com.example.yallah_project.Fragment;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.yallah_project.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyActivitiesFragment#newInstance} factory method to
+ * Use the {@link BookedActivitiesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyActivitiesFragment extends Fragment {
+public class BookedActivitiesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class MyActivitiesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MyActivitiesFragment() {
+    public BookedActivitiesFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class MyActivitiesFragment extends Fragment {
      * @return A new instance of fragment MyActivitiesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyActivitiesFragment newInstance(String param1, String param2) {
-        MyActivitiesFragment fragment = new MyActivitiesFragment();
+    public static BookedActivitiesFragment newInstance(String param1, String param2) {
+        BookedActivitiesFragment fragment = new BookedActivitiesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

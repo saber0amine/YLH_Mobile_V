@@ -6,4 +6,5 @@
     <item name="emailTextView" type="id" />
     <item name="ageTextView" type="id" />
     <item name="editProfileButton" type="id" />
+
 </resources>

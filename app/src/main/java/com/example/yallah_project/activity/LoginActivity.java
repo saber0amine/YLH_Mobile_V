@@ -59,7 +59,7 @@ CheckUserLogin() ;
             userLiveData.observe(this, user -> {
                 if (user != null) {
                     storeUserInformation(user);
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, nav_layout_all.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
                 } else {

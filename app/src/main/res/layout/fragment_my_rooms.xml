@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MyRoomsFragment">
+    tools:context=".Fragment.MyRoomsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Second Fragm " />
+        android:text="Second Fragm "
+        android:gravity="center"/>
 
 </FrameLayout>
