@@ -31,7 +31,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
     <activity android:name="com.example.yallah_project.activity.ProfileActivity"
-     />
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
     </application>
 
 </manifest>

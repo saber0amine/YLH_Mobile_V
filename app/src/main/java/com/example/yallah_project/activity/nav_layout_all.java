@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yallah_project.Fragment.ProfileFragment;
 import com.example.yallah_project.R;
 import com.example.yallah_project.Fragment.BookedActivitiesFragment;
 import com.example.yallah_project.Fragment.HomeFragment;
@@ -127,8 +128,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
                 } else if (id == R.id.nav_profile) {
                     Log.i("saberamine", "profile is clicked");
 
-                    Intent intent = new Intent(nav_layout_all.this, ProfileActivity.class);
-                    startActivity(intent);
+                   replaceFragment(new ProfileFragment());
+
                 } else if (id == R.id.nav_logout) {
                 Intent intent = new Intent(nav_layout_all.this, LoginActivity.class);
                 startActivity(intent);
@@ -150,22 +151,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
             int itemId = item.getItemId();
             if (itemId == R.id.home) {
                 Log.i("saberamine", "home butom is clicked");
-
-                fragmentTransaction.replace(R.id.fragmentContainerView, new HomeFragment() , null ).setReorderingAllowed(true).addToBackStack(null).commitAllowingStateLoss();
-            } else if (itemId == R.id.BookedActivites) {
+                replaceFragment(new HomeFragment());
+             } else if (itemId == R.id.BookedActivites) {
                 Log.i("saberamine", "booked butom is clicked");
+                replaceFragment(new BookedActivitiesFragment());
 
-                fragmentTransaction.replace(R.id.fragmentContainerView,  new BookedActivitiesFragment() , null ).setReorderingAllowed(true).addToBackStack(null).commitAllowingStateLoss();
-            } else if (itemId == R.id.rooms) {
+             } else if (itemId == R.id.rooms) {
                 Log.i("saberamine", "room butom is clicked");
+                replaceFragment(new MyRoomsFragment());
 
-                fragmentTransaction.replace(R.id.fragmentContainerView, new MyRoomsFragment()  , null ).setReorderingAllowed(true).addToBackStack(null).commitAllowingStateLoss();
             } else if (itemId == R.id.profile) {
                 Log.i("saberamine", "profile butom is clicked");
 
+                ProfileFragment profileFragment = new ProfileFragment();
+                Bundle args = new Bundle();
+                args.putParcelable("user", this_user[0]);
+                profileFragment.setArguments(args);
+              replaceFragment(profileFragment);
+
+/*
                 Intent intent  = new Intent(nav_layout_all.this, ProfileActivity.class);
                 intent.putExtra("user" , this_user[0]);
-                startActivity(intent);
+                startActivity(intent);*/
             }
 
             return true;
@@ -194,8 +201,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
         dialog.setContentView(R.layout.bottomsheetlayout);
 
         LinearLayout videoLayout = dialog.findViewById(R.id.layoutVideo);
-        LinearLayout shortsLayout = dialog.findViewById(R.id.layoutShorts);
-        LinearLayout liveLayout = dialog.findViewById(R.id.layoutLive);
+
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
         videoLayout.setOnClickListener(new View.OnClickListener() {
@@ -208,25 +214,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
             }
         });
 
-        shortsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                dialog.dismiss();
-                Toast.makeText(nav_layout_all.this,"Create a short is Clicked",Toast.LENGTH_SHORT).show();
 
-            }
-        });
 
-        liveLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-                Toast.makeText(nav_layout_all.this,"Go live is Clicked",Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

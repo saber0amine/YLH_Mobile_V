@@ -64,6 +64,7 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
         organisateurSwitchRequest.setGovernmentIdType(governmentIdType);
         organisateurSwitchRequest.setGovernmentIdImage(governmentIdImage);
         Call<ResponseBody> call = apiService.switchToOrganisateur(organisateurSwitchRequest);
+        Log.i("userView" , "outside the call") ;
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

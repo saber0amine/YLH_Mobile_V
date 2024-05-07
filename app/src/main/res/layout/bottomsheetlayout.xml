@@ -7,10 +7,10 @@
 
     <ImageView
         android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_align_vertical_top_24"
+        android:layout_height="70dp"
         android:layout_gravity="center|top"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,19 +21,19 @@
             android:id="@+id/createText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:text="Create"
+             android:text="Add your Activties Here"
             android:padding="8dp"
             android:textColor="@color/lavender"
              android:layout_marginTop="5dp"
             android:textSize="25dp" />
 
         <ImageView
+            android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_1x_mobiledata_24"
-            android:layout_marginLeft="250dp"
-            android:layout_marginTop="8dp"
-            android:id="@+id/cancelButton"/>
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/baseline_close_24" />
 
     </LinearLayout>
 
@@ -49,65 +49,17 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_align_vertical_top_24"/>
+            android:src="@android:drawable/ic_menu_add"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Upload a video"
             android:textColor="@color/lavender"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:textSize="16sp"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutShorts"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_align_vertical_top_24"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create a short"
-            android:textColor="@color/lavender"
-            android:layout_marginLeft="30dp"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutLive"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="30dp">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_align_vertical_top_24"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go live"
-            android:textColor="@color/lavender"
-            android:layout_marginLeft="30dp"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
 
 </LinearLayout>

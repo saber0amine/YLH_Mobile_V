@@ -17,12 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+
 import com.example.yallah_project.R;
-import com.example.yallah_project.database.SharedPrefer;
-import com.example.yallah_project.model.BookedActivity;
+
 import com.example.yallah_project.model.GovernmentIdType;
-import com.example.yallah_project.model.User;
-import com.example.yallah_project.model.UserRole;
+
 import com.example.yallah_project.viewmodel.UserViewModel;
 
 import java.io.ByteArrayOutputStream;
@@ -31,7 +30,7 @@ import java.io.IOException;
 public class OrganizerRegistrationActivity extends AppCompatActivity {
         private Bitmap profileBitmap;
          private ImageView identityImage  , uploadButton  ;
-    String IdentityType = "";
+    private GovernmentIdType  governmentIdType  ;
 private TextView Errors;
     private Button  SumbitButton , BackButton ;
     UserViewModel userViewModel ;
@@ -58,10 +57,10 @@ private TextView Errors;
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if(checkedId == R.id.identityCardOption) {
-                IdentityType = "IDENTITY_CARD";
+              governmentIdType = governmentIdType.IDENTITY_CARD;
         }
         else if(checkedId == R.id.passportOption) {
-            IdentityType = "PASSPORT";
+            governmentIdType = governmentIdType.PASSPORT;
 
         }
 
@@ -78,13 +77,9 @@ private TextView Errors;
     private Boolean SwitchUser() {
         if (profileBitmap != null) {
             //User user = getIntent().getParcelableExtra("user");
-            GovernmentIdType governmentIdType = GovernmentIdType.IDENTITY_CARD ;
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             profileBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imageBytes = baos.toByteArray();
-            if (IdentityType.equals("PASSPORT")) {
-                governmentIdType  = GovernmentIdType.PASSPORT;
-            }
             LiveData<String > serverRes  = userViewModel.switch_to_organisateur(governmentIdType  , imageBytes  ) ;
             serverRes.observe( this , resp-> {
                 if ( resp.startsWith("ok"))
