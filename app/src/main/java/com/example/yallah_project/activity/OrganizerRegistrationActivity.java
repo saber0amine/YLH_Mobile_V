@@ -14,9 +14,11 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.yallah_project.R;
+import com.example.yallah_project.database.SharedPrefer;
 import com.example.yallah_project.model.BookedActivity;
 import com.example.yallah_project.model.GovernmentIdType;
 import com.example.yallah_project.model.User;
@@ -33,33 +35,25 @@ public class OrganizerRegistrationActivity extends AppCompatActivity {
 private TextView Errors;
     private Button  SumbitButton , BackButton ;
     UserViewModel userViewModel ;
-RadioGroup identityType ;
+ RadioGroup identityType ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_organizer_registration);
+         setContentView(R.layout.activity_organizer_registration);
         Errors = findViewById(R.id.Errors) ;
-        userViewModel  = new ViewModelProvider(this).get(UserViewModel.class) ;
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class) ;
         uploadButton = findViewById(R.id.uploadButton) ;
-        BackButton =(Button) findViewById(R.id.BackButton) ;
+        BackButton = findViewById(R.id.BackButton) ;
         BackButton.setOnClickListener(view -> {
-            Intent intent = new Intent(OrganizerRegistrationActivity.this, HomeActivity.class);
+            Intent intent = new Intent(OrganizerRegistrationActivity.this, nav_layout_all.class);
             startActivity(intent);
         });
         identityType = findViewById(R.id.identityType) ;
         identityImage = findViewById(R.id.identityImage) ;
         SumbitButton = findViewById(R.id.SumbitButton) ;
         SumbitButton.setOnClickListener(view -> {
-            Boolean okey = SwitchUser() ;
-            if (okey) {
-                Intent intent = new Intent(OrganizerRegistrationActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-            else {
-                Errors.setText("Please fill all the fields");
-            }
-
-        });
+            SwitchUser() ;
+             }) ;
         identityType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -83,20 +77,25 @@ RadioGroup identityType ;
 
     private Boolean SwitchUser() {
         if (profileBitmap != null) {
-            User user = getIntent().getParcelableExtra("user");
+            //User user = getIntent().getParcelableExtra("user");
+            GovernmentIdType governmentIdType = GovernmentIdType.IDENTITY_CARD ;
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             profileBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imageBytes = baos.toByteArray();
-            user.setRole(UserRole.ORGANISATEUR) ;
             if (IdentityType.equals("PASSPORT")) {
-                user.setGovernmentIdType(GovernmentIdType.PASSPORT);
+                governmentIdType  = GovernmentIdType.PASSPORT;
             }
-            else if (IdentityType.equals(GovernmentIdType.IDENTITY_CARD)) {
-                user.setIdentityPicture(imageBytes);
-            }
+            LiveData<String > serverRes  = userViewModel.switch_to_organisateur(governmentIdType  , imageBytes  ) ;
+            serverRes.observe( this , resp-> {
+                if ( resp.startsWith("ok"))
+                {
+                    Errors.setText(resp);
+                 }
+                else {
+                    Errors.setText(resp);
+                 }
+            } );
 
-            user.setIdentityPicture(imageBytes);
-            userViewModel.update(user);
             return true;
         }
         return false;

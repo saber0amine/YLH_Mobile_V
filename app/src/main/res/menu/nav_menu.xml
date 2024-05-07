@@ -9,34 +9,50 @@
 
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/baseline_add_24"
+            android:icon="@drawable/baseline_home_24"
             android:title="Home"/>
 
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/baseline_add_24"
-            android:title="Settings"/>
+            android:id="@+id/nav_BookedActivites"
+            android:icon="@drawable/baseline_album_24"
+            android:title="Booking"/>
 
         <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/baseline_add_24"
-            android:title="Share"/>
+            android:id="@+id/nav_rooms"
+            android:icon="@drawable/baseline_chat_bubble_24"
+            android:title="Rooms"/>
 
         <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/baseline_add_24"
-            android:title="About Us"/>
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/baseline_account_circle_24"
+            android:title="Profile"/>
     </group>
+
+
+    <item
+        android:title="Become an Organisator">
+
+        <menu>
+            <item
+            android:id="@+id/info"
+            android:icon="@drawable/baseline_comment_24"
+            android:title="Info"/>
+            <item
+                android:id="@+id/switch_to_organisateur"
+                android:icon="@drawable/baseline_cameraswitch_24"
+                android:title="Switch"/>
+
+        </menu>
+    </item>
     <item
         android:title="">
 
         <menu>
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/baseline_add_24"
+                android:icon="@drawable/baseline_arrow_back_24"
                 android:title="Logout"/>
         </menu>
 
     </item>
-
 </menu>

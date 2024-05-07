@@ -13,13 +13,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.yallah_project.R;
+import com.example.yallah_project.database.SharedPrefer;
 import com.example.yallah_project.model.User;
+import com.example.yallah_project.model.UserRole;
 import com.example.yallah_project.viewmodel.UserViewModel;
 
 public class LoginActivity  extends AppCompatActivity implements View.OnClickListener {
     private Button registerButton  , loginButton ;
     private EditText loginEmail , loginPassword ;
     private TextView loginErrors;
+
+    private SharedPrefer sharedPrefer  ;
 
     private UserViewModel userViewModel ;
 
@@ -50,32 +54,33 @@ CheckUserLogin() ;
     }
 
     private void CheckUserLogin() {
-        if (loginEmail.getText().toString().isEmpty() && loginPassword.getText().toString().isEmpty()) {
-            loginErrors.setText("Please fill all the fields");
-        } else {
             String email = loginEmail.getText().toString();
             String password = loginPassword.getText().toString();
-            LiveData<User> userLiveData = userViewModel.getUserByEmailAndPassword(email, password);
-            userLiveData.observe(this, user -> {
-                if (user != null) {
-                    storeUserInformation(user);
+            User user = new User() ;
+            user.setEmail(email);
+            user.setPassword(password);
+             LiveData<String> userLiveData = userViewModel.login(user);
+            userLiveData.observe(this, jwt -> {
+                if (jwt.startsWith("ok")) {
+                    storeUserInformation(user, jwt);
                     Intent intent = new Intent(LoginActivity.this, nav_layout_all.class);
-                    intent.putExtra("user", user);
                     startActivity(intent);
                 } else {
-                    loginErrors.setText("User not found");
+                    loginErrors.setText(jwt);
                 }
             });
         }
-    }
 
-    private void storeUserInformation(User user) {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("user_data", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", user.getName());
-        editor.putString("email", user.getEmail());
-        editor.putString("password", user.getPassword());
-        editor.apply();
+
+
+    private void storeUserInformation(User user , String jwt) {
+      String[] paramName ={"name" , "email"  , "jwt"} ;
+      LiveData<User> userName = userViewModel.getUserByEmailAndPassword(user.getEmail() , user.getPassword()   ) ;
+      userName.observe(this , user1 -> {
+          String[] paramValue  = { user1.getName() , user1.getEmail() , jwt} ;
+          SharedPrefer.storeUserData(this , paramName , paramValue) ;
+      });
+
     }
 
 

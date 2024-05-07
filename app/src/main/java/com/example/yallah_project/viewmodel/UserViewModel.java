@@ -1,12 +1,16 @@
 package com.example.yallah_project.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.yallah_project.apis.ApiService;
+import com.example.yallah_project.database.SharedPrefer;
+import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
+import com.example.yallah_project.model.GovernmentIdType;
 import com.example.yallah_project.model.User;
 import com.example.yallah_project.network.RetrofitClient;
 import com.example.yallah_project.repository.UserRepository;
@@ -23,22 +27,25 @@ public class UserViewModel extends AndroidViewModel {
 
     private ApiService apiService;
     private UserRepository userRepository;
-    private LiveData<List<User>> allUsers;
 
     private int statusCode ;
+    private SharedPrefer sharedPrefer ;
 
     public UserViewModel(Application application) {
         super(application);
+        sharedPrefer    = new SharedPrefer() ;
+        String jwt = sharedPrefer.getUserData(getApplication(), "jwt");
         userRepository = new UserRepository(application);
-        allUsers = userRepository.getAllUsers();
-        apiService = RetrofitClient.getClient().create(ApiService.class);
+        if(jwt !=null) {
+            Log.i("jwt"  ,jwt)  ;
+            apiService = RetrofitClient.getClient(jwt).create(ApiService.class);
+        }
+        else          Log.i("jwt"  ,"nooooo token")  ;
 
     }
 
 
-    public LiveData<List<User>> getAllUsers() {
-        return allUsers;
-    }
+
 
     public void insert(User user) {
         userRepository.insert(user);
@@ -50,33 +57,55 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
 }
 
 
-    public void update(User user) {
-        userRepository.update(user);
-    }
+    public LiveData<String> switch_to_organisateur(GovernmentIdType governmentIdType, byte[] governmentIdImage ) {
 
-
-    // Retrofit Actions
-
-    public LiveData<Boolean> insertUser(User user) {
-
-        MutableLiveData<Boolean> serverResponse = new MutableLiveData<>();
-
-        Call<ResponseBody> call = apiService.registerUser(user);
+        MutableLiveData<String> serverResponse = new MutableLiveData<>();
+        OrganisateurSwitchRequest  organisateurSwitchRequest= new OrganisateurSwitchRequest() ;
+        organisateurSwitchRequest.setGovernmentIdType(governmentIdType);
+        organisateurSwitchRequest.setGovernmentIdImage(governmentIdImage);
+        Call<ResponseBody> call = apiService.switchToOrganisateur(organisateurSwitchRequest);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                // Handle response from server
                 if (response.isSuccessful()) {
-                    serverResponse.setValue(true);
+                    serverResponse.setValue("ok"+response.body().toString());
                 } else {
-                    serverResponse.setValue(false);
+                    try {
+                        String errorBody = response.errorBody().string();
+                        serverResponse.setValue(errorBody);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // Handle network error
+                serverResponse.setValue("Check your connection and try again");
+                t.printStackTrace();
+            }
+        });
+        return serverResponse  ;
+    }
+
+
+    // Retrofit Actions
+
+    public LiveData<Boolean> register(User user) {
+        MutableLiveData<Boolean> serverResponse = new MutableLiveData<>();
+        Call<ResponseBody> call = apiService.registerUser(user);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    serverResponse.setValue(true);
+                    userRepository.insert(user);
+                } else {
+                    serverResponse.setValue(false);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -86,9 +115,44 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
     }
 
 
+    public LiveData<String > login(User user) {
+
+        MutableLiveData<String> serverResponse = new MutableLiveData<>();
+
+        Call<ResponseBody> call = apiService.loginUser(user);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                // Handle response from server
+                if (response.isSuccessful()) {
+                    serverResponse.setValue("ok"+response.body().toString());
+                } else {
+                    try {
+                        String errorBody = response.errorBody().string();
+                        serverResponse.setValue(errorBody);
+
+                        Log.i("Body" , errorBody) ;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Handle network error
+                serverResponse.setValue("Check your connection and try again");
+
+                t.printStackTrace();
+            }
+        });
 
 
+        return serverResponse;
+    }
 
-
-
+    public LiveData<User> getUserByEmail(String userEmail) {
+        return  userRepository.getUserByEmail(userEmail) ;
+    }
 }

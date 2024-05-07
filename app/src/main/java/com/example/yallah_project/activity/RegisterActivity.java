@@ -2,6 +2,7 @@ package com.example.yallah_project.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,13 +13,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
- import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.yallah_project.R;
 import com.example.yallah_project.model.User;
@@ -50,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      private Bitmap profileBitmap ;
      private de.hdodenhof.circleimageview.CircleImageView ProfilePicture ;
 
+     private ProgressBar progressBar ;
      private UserViewModel userViewModel ;
 
 
@@ -70,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
          registerAge = findViewById(R.id.registerAge);
          registerAge.setOnClickListener(this);
           registerError = findViewById(R.id.registerErrors) ;
+        progressBar = findViewById(R.id.progressBar) ;
 
 
           userViewModel = new ViewModelProvider(this).get(UserViewModel.class) ;
@@ -93,12 +98,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 !registerPassword.getText().toString().isEmpty() &&
                 !registerAge.getText().toString().isEmpty() )
            {
-                 saveUser() ;
-               Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-               startActivity(intent);
+               progressBar.setVisibility(View.VISIBLE);
+               saveUser() ;
+
            }
            else {
-               registerError.setText("Error in your resgistartion !");
+               registerError.setText("Fill all fields and try again !");
            }
         }
 
@@ -156,13 +161,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         user.setPassword(registerPassword.getText().toString());
         user.setRole(UserRole.USER);
         String dateString = registerAge.getText().toString();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
-            Date date = format.parse(dateString);
-            user.setAge(date);
+            Date date = inputFormat.parse(dateString);
+            String formattedDate = outputFormat.format(date);
+            //user.setAge(outputFormat.parse(formattedDate));
         } catch (ParseException e) {
             e.printStackTrace();
-         }
+        }
 
         if (profileBitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -170,35 +177,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             byte[] imageBytes = baos.toByteArray();
             user.setProfilePicture(imageBytes);
         }
-        userViewModel.insert(user);
+        LiveData<Boolean> serverRep = userViewModel.register(user);
+        serverRep.observe(this , response -> {
+            if(serverRep.getValue() != null && serverRep.getValue() == true){
+                 progressBar.setVisibility(View.GONE);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+            else {
+                registerError.setText("User Registration Failed");
+            }
+        });
 
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

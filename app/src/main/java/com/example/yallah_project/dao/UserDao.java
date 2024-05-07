@@ -1,7 +1,5 @@
 package com.example.yallah_project.dao;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -34,4 +32,6 @@ LiveData<List<User>> getAll();
 LiveData<User> getUserByEmailAndPassword(String email, String password);
 
 
+    @Query("SELECT * FROM User WHERE email = :userEmail  LIMIT 1")
+    LiveData<User> getUserByEmail(String userEmail);
 }

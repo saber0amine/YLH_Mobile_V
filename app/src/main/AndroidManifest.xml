@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/img_1"
         android:supportsRtl="true"
-          android:theme="@style/Theme.Yallah.NoActionBar"
+          android:theme="@style/Theme.NavigationDrawer"
         tools:targetApi="31">
         <activity
             android:name=".activity.MainActivity"
@@ -27,8 +27,11 @@
         <activity android:name="com.example.yallah_project.activity.RegisterActivity" />
         <activity android:name="com.example.yallah_project.activity.HomeActivity" />
         <activity android:name="com.example.yallah_project.activity.OrganizerRegistrationActivity"/>
-        <activity android:name="com.example.yallah_project.activity.nav_layout_all"/>
-        <activity android:name="com.example.yallah_project.activity.RegisterRest"/>
+        <activity android:name="com.example.yallah_project.activity.nav_layout_all"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
+    <activity android:name="com.example.yallah_project.activity.ProfileActivity"
+     />
     </application>
 
 </manifest>
