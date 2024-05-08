@@ -49,12 +49,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_add"/>
+            android:src="@android:drawable/ic_menu_add" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Upload a video"
+            android:background="@drawable/rounded_corner_background"
+            android:text="Create Activity"
             android:textColor="@color/lavender"
             android:layout_marginLeft="10dp"
             android:textSize="16sp"/>

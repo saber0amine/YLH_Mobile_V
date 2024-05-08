@@ -3,7 +3,8 @@ package com.example.yallah_project.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
- import android.view.View;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,7 +63,8 @@ CheckUserLogin() ;
              LiveData<String> userLiveData = userViewModel.login(user);
             userLiveData.observe(this, jwt -> {
                 if (jwt.startsWith("ok")) {
-                    storeUserInformation(user, jwt);
+                    Log.i("jwt"  ,"from login " + jwt)  ;
+                    storeUserInformation(user, jwt.substring(2));
                     Intent intent = new Intent(LoginActivity.this, nav_layout_all.class);
                     startActivity(intent);
                 } else {

@@ -209,7 +209,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
             public void onClick(View v) {
 
                 dialog.dismiss();
-                Toast.makeText(nav_layout_all.this,"Upload a Video is clicked",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(nav_layout_all.this , CreateActivity.class);
+                startActivity(intent);
 
             }
         });

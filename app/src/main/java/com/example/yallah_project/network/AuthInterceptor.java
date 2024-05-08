@@ -1,5 +1,7 @@
 package com.example.yallah_project.network;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -20,6 +22,7 @@ public class AuthInterceptor implements Interceptor {
         if (original.url().encodedPath().equals("/login") || original.url().encodedPath().equals("/register")) {
             return chain.proceed(original);
         }
+        Log.i("userView" , "from the Interceptor " + authToken) ;
 
         Request.Builder builder = original.newBuilder()
                 .header("Authorization", "Bearer " + authToken);

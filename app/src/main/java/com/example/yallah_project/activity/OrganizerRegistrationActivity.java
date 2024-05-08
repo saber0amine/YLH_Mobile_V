@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -26,6 +27,10 @@ import com.example.yallah_project.viewmodel.UserViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class OrganizerRegistrationActivity extends AppCompatActivity {
         private Bitmap profileBitmap;
@@ -58,9 +63,13 @@ private TextView Errors;
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if(checkedId == R.id.identityCardOption) {
               governmentIdType = governmentIdType.IDENTITY_CARD;
+            Log.i("userView" , " identityCardOption") ;
+
+
         }
         else if(checkedId == R.id.passportOption) {
             governmentIdType = governmentIdType.PASSPORT;
+            Log.i("userView" , " PASSPORT") ;
 
         }
 
@@ -76,15 +85,27 @@ private TextView Errors;
 
     private Boolean SwitchUser() {
         if (profileBitmap != null) {
+            if (governmentIdType == null) {
+                Errors.setText("Please select an identity type.");
+                return false;
+            }
             //User user = getIntent().getParcelableExtra("user");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             profileBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] imageBytes = baos.toByteArray();
-            LiveData<String > serverRes  = userViewModel.switch_to_organisateur(governmentIdType  , imageBytes  ) ;
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
+            // MultipartBody.Part is used to send also the actual file name
+            MultipartBody.Part body = MultipartBody.Part.createFormData("IdentityPicture", "file.jpg", requestFile);
+            RequestBody governmentIdTypeStr = RequestBody.create(MediaType.parse("text/plain"), governmentIdType.toString());
+
+
+            LiveData<String > serverRes  = userViewModel.switch_to_organisateur(governmentIdTypeStr  , body  ) ;
             serverRes.observe( this , resp-> {
                 if ( resp.startsWith("ok"))
                 {
-                    Errors.setText(resp);
+                    Log.i("userView" , " inside  SwitchUser") ;
+
+                    Errors.setText(resp.substring(2));
                  }
                 else {
                     Errors.setText(resp);

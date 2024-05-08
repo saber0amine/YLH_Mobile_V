@@ -7,6 +7,14 @@ public class Location {
     private String country;
     private int zipCode;
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     // I will use them later for the Googlemap or OpenStreetMap APIs
     //---->
     // Calculating distances between locations
