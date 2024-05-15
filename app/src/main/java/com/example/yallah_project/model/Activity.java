@@ -1,5 +1,9 @@
 package com.example.yallah_project.model;
 
+import android.net.Uri;
+
+import java.io.File;
+import java.lang.reflect.Field;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,7 +36,7 @@ public class Activity {
 
 
 
-    private List<String> ActivityImages;
+    private List<File> ActivityImages;
 
 
     private ActivityCategorie activityCategorie;
@@ -143,11 +147,11 @@ public void setCapacity(int capacity) {
     this.capacity = capacity;
 }
 
-public List<String> getActivityImages() {
+public List<File> getActivityImages() {
     return ActivityImages;
 }
 
-public void setActivityImages(List<String> activityImages) {
+public void setActivityImages(List<File> activityImages) {
     ActivityImages = activityImages;
 }
 

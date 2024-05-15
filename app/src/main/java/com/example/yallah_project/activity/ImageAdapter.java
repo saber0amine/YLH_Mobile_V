@@ -1,5 +1,6 @@
 package com.example.yallah_project.activity;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,31 +15,32 @@ import com.example.yallah_project.R;
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    private List<String> images;
+    private List<Uri> images;
 
-    public ImageAdapter(List<String> images) {
+    public ImageAdapter(List<Uri> images) {
         this.images = images;
     }
 
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activities_card, parent, false);
         return new ImageViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        if (images != null && position < images.size()) {
-            String imageUrl = images.get(position);
-            // Load image using Glide or Picasso from the provided URL
-            Glide.with(holder.itemView.getContext()).load(imageUrl).into(holder.imageView);
-        }
+        Uri imageUri = images.get(position);
+        Glide.with(holder.itemView.getContext())
+                .load(imageUri)
+                .placeholder(R.drawable.placeholder) // Use the placeholder image
+                .error(R.drawable.error) // Use the error image
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return images != null ? images.size() : 0;
+        return images.size();
     }
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {

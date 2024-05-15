@@ -41,7 +41,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
 
         public ActivityViewHolder(View itemView) {
             super(itemView);
-            activityName = itemView.findViewById(R.id.activity_name);
+            //activityName = itemView.findViewById(R.id.activity_name);
             // Initialize other views
         }
     }

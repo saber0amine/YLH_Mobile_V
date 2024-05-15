@@ -214,10 +214,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
             public void onClick(View v) {
 
                 dialog.dismiss();
-                replaceFragment(new StepTwo_Fragment());
+                //replaceFragment(new StepTwo_Fragment());
 
-           /*     Intent intent = new Intent(nav_layout_all.this , CreateActivity.class);
-                startActivity(intent);*/
+           Intent intent = new Intent(nav_layout_all.this , FormCreateActivityContainer.class);
+                startActivity(intent);
 
             }
         });

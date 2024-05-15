@@ -17,6 +17,7 @@ import com.example.yallah_project.network.RetrofitClient;
 import com.example.yallah_project.repository.UserRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -171,9 +172,9 @@ String errorBody = response.errorBody().string();
         return  userRepository.getUserByEmail(userEmail) ;
     }
 
-    public LiveData<String> createActivity(Activity activity) {
+    public LiveData<String> createActivity(RequestBody activity ,  List<MultipartBody.Part> imageParts ) {
         MutableLiveData<String>  serverResponse = new MutableLiveData<>() ;
-        Call<ResponseBody> call = apiService.createActivity(activity);
+        Call<ResponseBody> call = apiService.createActivity(activity , imageParts);
         Log.i("CreateActivity", "from view model createActivity");
 
         call.enqueue(new Callback<ResponseBody>() {
