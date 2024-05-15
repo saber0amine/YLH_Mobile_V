@@ -35,6 +35,8 @@ android {
 
 dependencies {
     implementation("androidx.room:room-runtime:2.4.1")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     annotationProcessor ( "androidx.room:room-compiler:2.4.1" )
     implementation ("org.projectlombok:lombok:1.18.20")
     annotationProcessor ("org.projectlombok:lombok:1.18.20")

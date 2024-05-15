@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yallah_project.Fragment.ProfileFragment;
+import com.example.yallah_project.Fragment.StepTwo_Fragment;
 import com.example.yallah_project.R;
 import com.example.yallah_project.Fragment.BookedActivitiesFragment;
 import com.example.yallah_project.Fragment.HomeFragment;
@@ -93,6 +94,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
             }
         });
 
+
          if (savedInstanceState == null) {
              //replaceFragment(new HomeFragment());
          Log.i("saberamine", "savedInstance is null");
@@ -127,8 +129,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
                     replaceFragment(new MyRoomsFragment());
                 } else if (id == R.id.nav_profile) {
                     Log.i("saberamine", "profile is clicked");
-
-                   replaceFragment(new ProfileFragment());
+                    ProfileFragment profileFragment = new ProfileFragment() ;
+                    Bundle args = new Bundle();
+                    args.putParcelable("user", this_user[0]);
+                    profileFragment.setArguments(args);
+                   replaceFragment(profileFragment);
 
                 } else if (id == R.id.nav_logout) {
                 Intent intent = new Intent(nav_layout_all.this, LoginActivity.class);
@@ -209,9 +214,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
             public void onClick(View v) {
 
                 dialog.dismiss();
+                replaceFragment(new StepTwo_Fragment());
 
-                Intent intent = new Intent(nav_layout_all.this , CreateActivity.class);
-                startActivity(intent);
+           /*     Intent intent = new Intent(nav_layout_all.this , CreateActivity.class);
+                startActivity(intent);*/
 
             }
         });

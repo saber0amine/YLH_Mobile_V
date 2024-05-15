@@ -43,8 +43,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         CircleImageView profileImageView = view.findViewById(R.id.profileImageView);
 
 
-        user = getArguments().getParcelable("user");
-
+ user = getArguments().getParcelable("user");
         if (user != null) {
             Log.d("userProfil", user.toString());
             nameProfil.setText(user.getName());
