@@ -17,9 +17,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-          />
+        />
 
     <!-- Title -->
+    <TextView
+        android:id="@+id/activity_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Activity Name:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_image"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/activity_name"
         android:layout_width="0dp"
@@ -30,12 +41,23 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/activity_image"
+        app:layout_constraintTop_toBottomOf="@id/activity_name_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Activity Name" />
 
     <!-- Category -->
+    <TextView
+        android:id="@+id/activity_category_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:text="Category:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_name"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/activity_category"
         android:layout_width="wrap_content"
@@ -44,11 +66,22 @@
         android:layout_marginTop="4dp"
         android:textSize="14sp"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/activity_name"
+        app:layout_constraintTop_toBottomOf="@id/activity_category_label"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Category" />
 
     <!-- Price -->
+    <TextView
+        android:id="@+id/activity_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:text="Price:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_category"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/activity_price"
         android:layout_width="wrap_content"
@@ -58,11 +91,21 @@
         android:textSize="16sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/activity_category"
+        app:layout_constraintTop_toBottomOf="@id/activity_price_label"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="$100" />
 
     <!-- Description -->
+    <TextView
+        android:id="@+id/activity_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Description:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_price"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/activity_description"
         android:layout_width="0dp"
@@ -70,25 +113,24 @@
         android:layout_margin="16dp"
         android:textSize="16sp"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/activity_price"
+        app:layout_constraintTop_toBottomOf="@id/activity_description_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="This is a detailed description of the activity. It provides all the necessary information about the activity." />
 
-
-
-      <TextView
-    android:id="@+id/activity_capacity_label"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginTop="16dp"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    app:layout_constraintTop_toBottomOf="@id/activity_description"
-    app:layout_constraintStart_toStartOf="parent"
-    tools:text="Capacity: " />
-
+    <!-- Capacity -->
+    <TextView
+        android:id="@+id/activity_capacity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="14sp"
+        android:text="Capacity:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_description"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Capacity: " />
 
     <!-- Start Date -->
     <TextView
@@ -104,77 +146,57 @@
         app:layout_constraintTop_toBottomOf="@id/activity_description"
         tools:text="20 people" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
+    <!-- Start Date -->
+    <TextView
+        android:id="@+id/activity_start_date_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_capacity_label">
+        android:text="Start Date:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_capacity_label"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/activity_start_date_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="Start Date: " />
-
-        <TextView
-            android:id="@+id/activity_start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="01/01/2023" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/activity_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/activity_start_date_label"
+        app:layout_constraintTop_toBottomOf="@id/activity_capacity_label"
+        tools:text="01/01/2023" />
 
     <!-- End Date -->
-
-    <!-- Booking Button -->
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/activity_end_date_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_capacity_label">
+        android:layout_marginTop="8dp"
+        android:text="End Date:"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/activity_start_date"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/activity_end_date_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="End Date: " />
+    <TextView
+        android:id="@+id/activity_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/activity_end_date_label"
+        app:layout_constraintTop_toBottomOf="@id/activity_start_date"
+        tools:text="01/05/2023" />
 
-        <TextView
-            android:id="@+id/activity_end_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:text="01/05/2023" />
-        <TextView
-            android:id="@+id/messageServer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/red"
-            android:textSize="14sp"
-    />
-
-    </LinearLayout>
-
+    <!-- Booking Button -->
     <Button
         android:id="@+id/button_booking"
         android:layout_width="0dp"
@@ -188,8 +210,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/activity_end_date"
         tools:ignore="MissingConstraints" />
+
+    <!-- Back Button -->
     <Button
         android:id="@+id/button_back"
         android:layout_width="0dp"

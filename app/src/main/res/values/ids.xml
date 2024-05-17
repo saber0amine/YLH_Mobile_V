@@ -7,5 +7,6 @@
     <item name="ageTextView" type="id" />
     <item name="editProfileButton" type="id" />
     <item name="searchButton" type="id" />
+    <item name="activity_booking_date" type="id" />
 
 </resources>
