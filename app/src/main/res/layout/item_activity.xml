@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_card_background"
+    android:elevation="4dp"
+    android:layout_margin="8dp"
+    android:padding="16dp">
+
+    <!-- Activity Image -->
+    <ImageView
+        android:id="@+id/activity_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_image" />
+
+    <!-- Activity Name -->
+    <TextView
+        android:id="@+id/activity_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingTop="8dp"
+        android:textColor="@color/black" />
+
+    <!-- Activity Description -->
+    <TextView
+        android:id="@+id/activity_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:textColor="@color/black" />
+
+    <!-- Horizontal Layout for Category and Price -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/activity_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/activity_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!-- Horizontal Layout for Capacity and Start Date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/activity_capacity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/activity_start_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!-- Activity End Date -->
+    <TextView
+        android:id="@+id/activity_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:textColor="@color/black" />
+
+    <!-- See More Button -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/button_see_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:text="see more  "
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/button_booking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="150dp"
+        android:text="Book Now  "
+        android:textColor="@color/black"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

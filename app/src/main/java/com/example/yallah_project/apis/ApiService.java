@@ -1,11 +1,13 @@
 package com.example.yallah_project.apis;
 
 
+import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
 import com.example.yallah_project.model.Activity;
 import com.example.yallah_project.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -16,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface ApiService {
     @POST("/register")
@@ -36,5 +39,8 @@ Call<ResponseBody> switchToOrganisateur(@Part("governmentIdType") RequestBody go
     );
 
     @GET("get-All-Activities")
-    Call<List<Activity>> getActivities();
+    Call<List<ActivityDto>> getActivities();
+
+    @POST("/user/Book-Activity/{id}")
+    Call<ResponseBody> bookActivity(@Path("id") UUID activityId);
 }

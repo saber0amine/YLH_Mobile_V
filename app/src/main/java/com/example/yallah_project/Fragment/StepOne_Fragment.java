@@ -124,7 +124,7 @@ public class StepOne_Fragment extends Fragment implements  View.OnClickListener 
             Log.i("CreateActivity", "selectedImages.size() > 0");
 
             //activity.setActivityImages(selectedImages); I wiill recivie the uri form spring and store them locally
-            activity.setActivityImages(stringToFile(selectedImages));
+            activity.setActivityImages(selectedImages);
         }
         String activityJson = new Gson().toJson(activity);
         RequestBody activityBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), activityJson);

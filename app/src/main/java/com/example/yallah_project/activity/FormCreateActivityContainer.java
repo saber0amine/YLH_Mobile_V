@@ -13,20 +13,20 @@ import androidx.lifecycle.ViewModelProvider;
 
  import com.example.yallah_project.Fragment.StepTwo_Fragment;
 import com.example.yallah_project.R;
-import com.example.yallah_project.viewmodel.ActivityViewModel;
+import com.example.yallah_project.viewmodel.UserViewModel;
 
 
 public class FormCreateActivityContainer extends AppCompatActivity implements  View.OnClickListener {
 
 
-    private ActivityViewModel activityViewModel;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_activity_layout);
 
-        activityViewModel = new ViewModelProvider(this).get(ActivityViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         // Load the first fragment
         loadFragment(new StepTwo_Fragment());
@@ -40,8 +40,8 @@ public class FormCreateActivityContainer extends AppCompatActivity implements  V
                 .commit();
     }
 
-    public ActivityViewModel getActivityViewModel() {
-        return activityViewModel;
+    public UserViewModel getActivityViewModel() {
+        return userViewModel;
     }
 
 

@@ -35,6 +35,7 @@
         <activity android:name=".activity.FormCreateActivityContainer" />
     <activity android:name="com.example.yallah_project.activity.ProfileActivity"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity android:name=".activity.ActivityDetails"/>
     </application>
 
 </manifest>

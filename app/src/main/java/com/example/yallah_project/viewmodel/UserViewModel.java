@@ -10,14 +10,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.yallah_project.apis.ApiService;
 import com.example.yallah_project.database.SharedPrefer;
+import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
 import com.example.yallah_project.model.Activity;
 import com.example.yallah_project.model.User;
 import com.example.yallah_project.network.RetrofitClient;
 import com.example.yallah_project.repository.UserRepository;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -82,8 +85,8 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
 
                 } else {
                     try {
-Log.i("userView", "server response is not ok, status code: " + response.code() + ", error body: " + response.errorBody().string());
-String errorBody = response.errorBody().string();
+        Log.i("userView", "server response is not ok, status code: " + response.code() + ", error body: " + response.errorBody().string());
+        String errorBody = response.errorBody().string();
                         serverResponse.setValue(errorBody);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -208,5 +211,71 @@ String errorBody = response.errorBody().string();
         return serverResponse ;
 
 
+    }
+
+    public LiveData<List<ActivityDto>> getActivities() {
+        MutableLiveData<List<ActivityDto>> activities = new MutableLiveData<>();
+
+        Call<List<ActivityDto>> call = apiService.getActivities();
+        call.enqueue(new Callback<List<ActivityDto>>() {
+            @Override
+            public void onResponse(Call<List<ActivityDto>> call, Response<List<ActivityDto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    activities.setValue(response.body());
+                    Log.i("gettingActivities", "Success: " + response.body().toString());
+                    List<ActivityDto> activityDtos = response.body();
+                    activities.setValue(activityDtos);
+
+
+                    Log.i("gettingActivities", "The json: " + new Gson().toJson(activityDtos));
+
+                } else {
+                    Log.i("gettingActivities", "Response not successful: " + response.message());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.i("gettingActivities", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            Log.e("gettingActivities", "Error reading error body", e);
+                        }
+                    }
+                    activities.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ActivityDto>> call, Throwable t) {
+                Log.e("gettingActivities", "Failure: " + t.getMessage());
+                activities.setValue(null);
+            }
+
+        });
+        return activities;
+
+    }
+
+    public LiveData<String> bookActivity(UUID id) {
+        MutableLiveData<String> serverResponse = new MutableLiveData<>();
+        Call<ResponseBody> call = apiService.bookActivity(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    serverResponse.setValue("ok");
+                } else {
+                    try {
+                        serverResponse.setValue(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                serverResponse.setValue("Check your connection and try again");
+                t.printStackTrace();
+            }
+        });
+        return serverResponse;
     }
 }

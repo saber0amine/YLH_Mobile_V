@@ -1,5 +1,10 @@
 package com.example.yallah_project.model;
 
+
+import android.os.Parcelable;
+
+
+
 public enum ActivityCategorie {
 
          SWIMMING,
@@ -32,7 +37,8 @@ public enum ActivityCategorie {
         SKYDIVING,
         HOT_AIR_BALLOON_RIDES,
         WHALE_WATCHING,
-        SAFARI_TOURS
+        SAFARI_TOURS;
+
 
 
 }

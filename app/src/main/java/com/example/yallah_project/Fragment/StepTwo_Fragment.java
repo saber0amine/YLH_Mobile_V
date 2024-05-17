@@ -20,7 +20,7 @@ import android.widget.Button;
 import com.example.yallah_project.R;
 import com.example.yallah_project.activity.FormCreateActivityContainer;
 import com.example.yallah_project.activity.ImageAdapter;
-import com.example.yallah_project.viewmodel.ActivityViewModel;
+import com.example.yallah_project.viewmodel.UserViewModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,13 +42,13 @@ public class StepTwo_Fragment extends Fragment {
     private  List<String> filePaths = new ArrayList<>() ;
     private Button uploadButton;
     private Button next  ;
-    private ActivityViewModel activityViewModel;
+    private UserViewModel userViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_step_two_, container, false);
-        activityViewModel = ((FormCreateActivityContainer) requireActivity()).getActivityViewModel();
+        userViewModel = ((FormCreateActivityContainer) requireActivity()).getActivityViewModel();
 
         recyclerView = view.findViewById(R.id.imageRecyclerView);
         uploadButton = view.findViewById(R.id.uploadButton2);

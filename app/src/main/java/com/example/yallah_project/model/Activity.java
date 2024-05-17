@@ -36,7 +36,7 @@ public class Activity {
 
 
 
-    private List<File> ActivityImages;
+    private List<String> ActivityImages;
 
 
     private ActivityCategorie activityCategorie;
@@ -147,11 +147,11 @@ public void setCapacity(int capacity) {
     this.capacity = capacity;
 }
 
-public List<File> getActivityImages() {
+public List<String> getActivityImages() {
     return ActivityImages;
 }
 
-public void setActivityImages(List<File> activityImages) {
+public void setActivityImages(List<String> activityImages) {
     ActivityImages = activityImages;
 }
 
