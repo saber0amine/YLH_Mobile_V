@@ -43,4 +43,8 @@ Call<ResponseBody> switchToOrganisateur(@Part("governmentIdType") RequestBody go
 
     @POST("/user/Book-Activity/{id}")
     Call<ResponseBody> bookActivity(@Path("id") UUID activityId);
+
+    @GET("/user/Get-BokeedActivties")
+    Call<List<ActivityDto>> gettAllBookedActivities() ;
+
 }

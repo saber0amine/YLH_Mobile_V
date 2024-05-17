@@ -278,4 +278,44 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
         });
         return serverResponse;
     }
+
+    public LiveData<List<ActivityDto>> gettAllBookedActivities() {
+        MutableLiveData<List<ActivityDto>> activities = new MutableLiveData<>();
+
+        Call<List<ActivityDto>> call = apiService.gettAllBookedActivities();
+        call.enqueue(new Callback<List<ActivityDto>>() {
+            @Override
+            public void onResponse(Call<List<ActivityDto>> call, Response<List<ActivityDto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    activities.setValue(response.body());
+                    Log.i("gettingActivities", "Success: " + response.body().toString());
+                    List<ActivityDto> activityDtos = response.body();
+                    activities.setValue(activityDtos);
+
+
+                    Log.i("gettingActivities", "The json: " + new Gson().toJson(activityDtos));
+
+                } else {
+                    Log.i("gettingActivities", "Response not successful: " + response.message());
+                    if (response.errorBody() != null) {
+                        try {
+                            Log.i("gettingActivities", "Error body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            Log.e("gettingActivities", "Error reading error body", e);
+                        }
+                    }
+                    activities.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ActivityDto>> call, Throwable t) {
+                Log.e("gettingActivities", "Failure: " + t.getMessage());
+                activities.setValue(null);
+            }
+
+        });
+        return activities;
+
+    }
 }
