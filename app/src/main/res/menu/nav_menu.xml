@@ -30,17 +30,22 @@
 
 
     <item
-        android:title="Become an Organisator">
+        android:title="Become an Organizer">
 
         <menu>
             <item
-            android:id="@+id/info"
-            android:icon="@drawable/baseline_comment_24"
-            android:title="Info"/>
+            android:id="@+id/organisateur_dashboar"
+            android:icon="@drawable/baseline_bar_chart_24"
+            android:title="Dashboard"/>
             <item
                 android:id="@+id/switch_to_organisateur"
                 android:icon="@drawable/baseline_cameraswitch_24"
                 android:title="Switch"/>
+            <item
+            android:id="@+id/info"
+            android:icon="@drawable/baseline_comment_24"
+            android:title="Info"/>
+
 
         </menu>
     </item>

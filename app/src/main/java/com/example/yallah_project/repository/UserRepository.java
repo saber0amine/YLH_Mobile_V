@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.example.yallah_project.dao.UserDao;
 import com.example.yallah_project.database.AppDatabase;
 import com.example.yallah_project.model.User;
+import com.example.yallah_project.model.UserRole;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,5 +47,11 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
 
     public LiveData<User> getUserByEmail(String userEmail) {
         return userDao.getUserByEmail(userEmail);
+    }
+
+    public void setRole(String email , UserRole userRole) {
+        executorService.execute(() -> {
+            userDao.setRole(email ,  userRole);
+        });
     }
 }

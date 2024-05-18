@@ -1,8 +1,10 @@
 package com.example.yallah_project.apis;
 
 
+import com.example.yallah_project.activity.OrganizerDashboard;
 import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
+import com.example.yallah_project.dtos.OrgnizerActivitiesDto;
 import com.example.yallah_project.model.Activity;
 import com.example.yallah_project.model.User;
 
@@ -14,6 +16,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -47,4 +50,11 @@ Call<ResponseBody> switchToOrganisateur(@Part("governmentIdType") RequestBody go
     @GET("/user/Get-BokeedActivties")
     Call<List<ActivityDto>> gettAllBookedActivities() ;
 
+
+    @GET("orginzer-dashboard")
+    Call<OrgnizerActivitiesDto> getOrganizerActivitiesDetails();
+
+
+    @DELETE("Remove-Activity/{id}")
+    Call<ResponseBody> removeActivity(@Path("id") UUID activityId);
 }

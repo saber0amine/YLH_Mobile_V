@@ -8,6 +8,7 @@ import androidx.room.Update;
 import androidx.room.Delete;
 
 import com.example.yallah_project.model.User;
+import com.example.yallah_project.model.UserRole;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,4 +35,7 @@ LiveData<User> getUserByEmailAndPassword(String email, String password);
 
     @Query("SELECT * FROM User WHERE email = :userEmail  LIMIT 1")
     LiveData<User> getUserByEmail(String userEmail);
+
+    @Query("UPDATE  User SET role = :userRole WHERE email = :email ")
+    void setRole(String email  , UserRole userRole);
 }

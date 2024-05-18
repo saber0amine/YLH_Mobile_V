@@ -8,12 +8,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.yallah_project.activity.OrganizerDashboard;
 import com.example.yallah_project.apis.ApiService;
 import com.example.yallah_project.database.SharedPrefer;
 import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
+import com.example.yallah_project.dtos.OrgnizerActivitiesDto;
 import com.example.yallah_project.model.Activity;
 import com.example.yallah_project.model.User;
+import com.example.yallah_project.model.UserRole;
 import com.example.yallah_project.network.RetrofitClient;
 import com.example.yallah_project.repository.UserRepository;
 import com.google.gson.Gson;
@@ -77,6 +80,7 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
                 if (response.isSuccessful()) {
                     try {
                         serverResponse.setValue("ok"+response.body().string());
+                        userRepository.setRole(sharedPrefer.getUserData(getApplication() , "email") ,  UserRole.ORGANISATEUR) ;
                         Log.i("userView" , "server response is ok"+response.body().string()) ;
 
                     } catch (IOException e) {
@@ -317,5 +321,56 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
         });
         return activities;
 
+    }
+
+
+    public LiveData<OrgnizerActivitiesDto> getOrganizerActivitiesDetails() {
+        MutableLiveData<OrgnizerActivitiesDto> organizerActivities = new MutableLiveData<>();
+
+        Call<OrgnizerActivitiesDto> call = apiService.getOrganizerActivitiesDetails();
+        call.enqueue(new Callback<OrgnizerActivitiesDto>() {
+            @Override
+            public void onResponse(Call<OrgnizerActivitiesDto> call, Response<OrgnizerActivitiesDto> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    organizerActivities.setValue(response.body());
+                    Log.i("gettingActivities", "Success: " + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrgnizerActivitiesDto> call, Throwable t) {
+                Log.e("gettingActivities", "Failure: " + t.getMessage());
+                organizerActivities.setValue(null);
+            }
+        });
+
+        return organizerActivities;
+    }
+
+
+    public LiveData<Object> removeActivity(UUID activityId) {
+        MutableLiveData<Object> serverResponse = new MutableLiveData<>();
+        Call<ResponseBody> call = apiService.removeActivity(activityId);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    serverResponse.setValue("ok");
+                } else {
+                    try {
+                        serverResponse.setValue(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                serverResponse.setValue("Check your connection and try again");
+                t.printStackTrace();
+            }
+        });
+        return serverResponse;
     }
 }

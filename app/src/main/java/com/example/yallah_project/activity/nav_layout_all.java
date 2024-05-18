@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -27,19 +26,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yallah_project.Fragment.ProfileFragment;
-import com.example.yallah_project.Fragment.StepTwo_Fragment;
 import com.example.yallah_project.R;
 import com.example.yallah_project.Fragment.BookedActivitiesFragment;
 import com.example.yallah_project.Fragment.HomeFragment;
 import com.example.yallah_project.Fragment.MyRoomsFragment;
 import com.example.yallah_project.database.SharedPrefer;
 import com.example.yallah_project.model.User;
+import com.example.yallah_project.model.UserRole;
 import com.example.yallah_project.viewmodel.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,8 +57,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
      private SharedPrefer sharedPrefer ;
      private UserViewModel userViewModel ;
      private Toolbar toolbar ;
-
+     private  User[] thisUser ;
      private FragmentContainerView fragmentContainerView  ;
+
+     public nav_layout_all() {
+         super();
+     }
+
+     public nav_layout_all(User[] thisUser) {
+         thisUser = thisUser;
+     }
+
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,12 +86,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
         sharedPrefer  = new SharedPrefer() ;
         String UserEmail  = sharedPrefer.getUserData(this,"email") ;
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class) ;
-        final User[] this_user = new User[1];
+         thisUser = new User[1];
         LiveData<User> user = null;
         user = userViewModel.getUserByEmail(UserEmail) ;
         user.observe( this , user1 -> {
             if(user1!= null) {
-            this_user[0] = user1 ;
+                thisUser[0] = user1 ;
             Log.i("user", user1.toString());
 
             byte[] imageBytes = user1.getProfilePicture();
@@ -131,7 +140,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
                     Log.i("saberamine", "profile is clicked");
                     ProfileFragment profileFragment = new ProfileFragment() ;
                     Bundle args = new Bundle();
-                    args.putParcelable("user", this_user[0]);
+                    args.putParcelable("user", thisUser[0]);
                     profileFragment.setArguments(args);
                    replaceFragment(profileFragment);
 
@@ -141,6 +150,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
                 finish();
                 }
 
+                else if ( id == R.id.organisateur_dashboar) {
+                    Intent intent = new Intent(nav_layout_all.this, OrganizerDashboard.class);
+                    startActivity(intent);
+                }
+                else if ( id == R.id.switch_to_organisateur) {
+                    Intent intent = new Intent(nav_layout_all.this, OrganizerRegistrationActivity.class);
+                    startActivity(intent);
+                }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -170,7 +187,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
                 ProfileFragment profileFragment = new ProfileFragment();
                 Bundle args = new Bundle();
-                args.putParcelable("user", this_user[0]);
+                args.putParcelable("user", thisUser[0]);
                 profileFragment.setArguments(args);
               replaceFragment(profileFragment);
 
@@ -205,24 +222,38 @@ import de.hdodenhof.circleimageview.CircleImageView;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
 
-        LinearLayout videoLayout = dialog.findViewById(R.id.layoutVideo);
+         Button  videoLayout= dialog.findViewById(R.id.layoutVideo);
 
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
+
+        Button layoutDashboard = dialog.findViewById(R.id.layoutDashboard)  ;
 
         videoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 dialog.dismiss();
-                //replaceFragment(new StepTwo_Fragment());
-
-           Intent intent = new Intent(nav_layout_all.this , FormCreateActivityContainer.class);
-                startActivity(intent);
-
+             if(thisUser[0].getRole().equals(UserRole.ORGANISATEUR) )
+                {Intent intent = new Intent(nav_layout_all.this , FormCreateActivityContainer.class);
+                    startActivity(intent) ; }
+        if (thisUser[0].getRole().equals(UserRole.USER)){
+            Toast.makeText(nav_layout_all.this, "You are not allowed to create an activity , Swtich to YALLAH Organizateur", Toast.LENGTH_LONG).show();   }
             }
         });
 
 
+        layoutDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+                if(thisUser[0].getRole().equals(UserRole.ORGANISATEUR) )
+                {Intent intent = new Intent(nav_layout_all.this , OrganizerDashboard.class);
+                    startActivity(intent) ; }
+                if (thisUser[0].getRole().equals(UserRole.USER)){
+                    Toast.makeText(nav_layout_all.this, "You are not allowed to visualize the activities , Swtich to YALLAH Organizateur", Toast.LENGTH_LONG).show();   }
+            }
+        });
 
 
 

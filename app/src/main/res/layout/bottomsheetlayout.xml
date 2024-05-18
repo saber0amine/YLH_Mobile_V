@@ -21,8 +21,9 @@
             android:id="@+id/createText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:text="Add your Activties Here"
+             android:text="Manage your activties here"
             android:padding="8dp"
+            android:layout_marginLeft="30dp"
             android:textColor="@color/lavender"
              android:layout_marginTop="5dp"
             android:textSize="25dp" />
@@ -39,23 +40,34 @@
 
 
     <LinearLayout
-        android:id="@+id/layoutVideo"
-        android:orientation="horizontal"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="10dp"
         android:padding="10dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_add" />
 
         <Button
+            android:id="@+id/layoutVideo"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_background"
             android:text="Create Activity"
+            android:textColor="@color/lavender"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"/>
+
+
+        <Button
+            android:id="@+id/layoutDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:background="@drawable/rounded_corner_background"
+            android:text="Visualize Your Activities"
             android:textColor="@color/lavender"
             android:layout_marginLeft="10dp"
             android:textSize="16sp"/>

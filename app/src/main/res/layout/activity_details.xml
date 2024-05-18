@@ -8,6 +8,8 @@
     tools:context=".activity.ActivityDetails">
 
     <!-- Activity Image -->
+
+    <!-- Title -->
     <ImageView
         android:id="@+id/activity_image"
         android:layout_width="0dp"
@@ -15,16 +17,15 @@
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Title -->
     <TextView
         android:id="@+id/activity_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="Activity Name:"
         android:textColor="@color/black"
@@ -151,7 +152,7 @@
         android:id="@+id/activity_start_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="Start Date:"
         android:textColor="@color/black"
@@ -176,7 +177,7 @@
         android:id="@+id/activity_end_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="End Date:"
         android:textColor="@color/black"
@@ -197,12 +198,14 @@
         tools:text="01/05/2023" />
 
     <!-- Booking Button -->
+
+    <!-- Back Button -->
     <Button
         android:id="@+id/button_booking"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/lavender"
         android:text="Book Now"
@@ -213,14 +216,13 @@
         app:layout_constraintTop_toBottomOf="@+id/activity_end_date"
         tools:ignore="MissingConstraints" />
 
-    <!-- Back Button -->
     <Button
         android:id="@+id/button_back"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="16dp"
         android:backgroundTint="@color/lavender"
         android:text="Back"
         android:textColor="@color/white"
@@ -229,4 +231,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_booking"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/messageServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/activity_end_date_label"
+        app:layout_constraintTop_toBottomOf="@id/activity_start_date"
+         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

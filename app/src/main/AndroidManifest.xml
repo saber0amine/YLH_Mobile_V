@@ -32,6 +32,7 @@
         <activity android:name="com.example.yallah_project.activity.nav_layout_all"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
+        <activity android:name=".activity.OrganizerDashboard"/>
         <activity android:name=".activity.FormCreateActivityContainer" />
     <activity android:name="com.example.yallah_project.activity.ProfileActivity"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />

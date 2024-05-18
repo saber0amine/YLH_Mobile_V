@@ -76,7 +76,7 @@ CheckUserLogin() ;
 
 
     private void storeUserInformation(User user , String jwt) {
-      String[] paramName ={"name" , "email"  , "jwt"} ;
+      String[] paramName ={"name" , "email"  , "jwt" } ;
       LiveData<User> userName = userViewModel.getUserByEmailAndPassword(user.getEmail() , user.getPassword()   ) ;
       userName.observe(this , user1 -> {
           String[] paramValue  = { user1.getName() , user1.getEmail() , jwt} ;
