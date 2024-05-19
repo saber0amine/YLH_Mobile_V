@@ -3,24 +3,60 @@ package com.example.yallah_project.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.security.PublicKey;
-import java.util.jar.Pack200;
-
-public class Location  implements Parcelable {
+public class Location implements Parcelable {
     private String street;
+    private String formattedAddress; // Human-readable address obtained from map API
+
     private String city;
     private String state;
     private String country;
     private int zipCode;
+    private Double latitude;
+    private Double longitude;
+    private Activity activity  ;
 
-public Location() {
+    public Location()  {
     }
-    public  Location(String street, String city, String state, String country, int zipCode){
+
+    public Location(String street, String city, String state, String country, int zipCode, Double latitude, Double longitude , Activity activity) {
         this.street = street;
         this.city = city;
         this.state = state;
         this.country = country;
         this.zipCode = zipCode;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.activity  =activity  ;
+    }
+
+    public Location(String formattedAddress  ,double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.formattedAddress = formattedAddress;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public String getFormattedAddress() {
+        return formattedAddress;
+    }
+
+    public void setFormattedAddress(String formattedAddress) {
+        this.formattedAddress = formattedAddress;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCity() {
@@ -31,27 +67,67 @@ public Location() {
         this.city = city;
     }
 
-    // I will use them later for the Googlemap or OpenStreetMap APIs
-    //---->
-    // Calculating distances between locations
-    // Searching for activities near a location:
-    //--->
-    private Double latitude;
-    private Double longitude;
+    public String getState() {
+        return state;
+    }
 
+    public void setState(String state) {
+        this.state = state;
+    }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
     protected Location(Parcel in) {
+        street = in.readString();
         city = in.readString();
         state = in.readString();
         country = in.readString();
         zipCode = in.readInt();
-        latitude = in.readByte() == 0 ? null : in.readDouble();
-        longitude = in.readByte() == 0 ? null : in.readDouble();
+        if (in.readByte() == 0) {
+            latitude = null;
+        } else {
+            latitude = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            longitude = null;
+        } else {
+            longitude = in.readDouble();
+        }
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(street);
         dest.writeString(city);
         dest.writeString(state);
         dest.writeString(country);
@@ -70,7 +146,6 @@ public Location() {
         }
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -88,6 +163,7 @@ public Location() {
         }
     };
 }
+
 
 
 

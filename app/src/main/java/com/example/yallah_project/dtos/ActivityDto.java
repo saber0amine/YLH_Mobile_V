@@ -14,6 +14,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ import java.util.UUID;
      @SerializedName("organizerName")
      private String organizerName;
      @SerializedName("location")
-     private Location location;
+     private List<Location> location;
 
     @SerializedName("dateOfPublish")
      private  List<String>  dateOfPublish;
@@ -69,7 +70,7 @@ import java.util.UUID;
 
 
 
-    public ActivityDto(UUID id, String name, String description, String organizerName, UUID organizerId, Location location,  List<String>  dateOfPublish,  List<String>  dateOfStart,  List<String>  dateOfEnd, String duration, Long price, int capacity, List<String> activityImages, ActivityCategorie activityCategorie, int maxage, int minage) {
+    public ActivityDto(UUID id, String name, String description, String organizerName, UUID organizerId, List<Location> location,  List<String>  dateOfPublish,  List<String>  dateOfStart,  List<String>  dateOfEnd, String duration, Long price, int capacity, List<String> activityImages, ActivityCategorie activityCategorie, int maxage, int minage) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -109,11 +110,11 @@ public void setOrganizerName(String organizerName) {
     this.organizerName = organizerName;
 }
 
-public Location getLocation() {
+public List<Location> getLocation() {
     return location;
 }
 
-public void setLocation(Location location) {
+public void setLocation(List<Location> location) {
     this.location = location;
 }
 
@@ -216,24 +217,25 @@ public void setMinage(int minage) {
             return organizerName;
         }
 
-
      protected ActivityDto(Parcel in) {
          id = in.readByte() == 0 ? null : (UUID) in.readSerializable();
-         name = in.readByte() == 0 ? null : in.readString();
-         description = in.readByte() == 0 ? null : in.readString();
-         organizerName = in.readByte() == 0 ? null : in.readString();
+         name = in.readString();
+         description = in.readString();
+         organizerName = in.readString();
          organizerId = in.readByte() == 0 ? null : (UUID) in.readSerializable();
          if (in.readByte() == 0) {
              location = null;
          } else {
-             location = in.readParcelable(Location.class.getClassLoader());
-         }         dateOfPublish = in.readByte() == 0 ? null : in.createStringArrayList();
-         dateOfStart = in.readByte() == 0 ? null : in.createStringArrayList();
-         dateOfEnd = in.readByte() == 0 ? null : in.createStringArrayList();
+             location = new ArrayList<>();
+             in.readList(location, Location.class.getClassLoader());
+         }
+         dateOfPublish = in.createStringArrayList();
+         dateOfStart = in.createStringArrayList();
+         dateOfEnd = in.createStringArrayList();
          duration = in.readInt();
          price = in.readByte() == 0 ? null : in.readLong();
          capacity = in.readInt();
-         ActivityImages = in.readByte() == 0 ? null : in.createStringArrayList();
+         ActivityImages = in.createStringArrayList();
          activityCategorie = ActivityCategorie.values()[in.readInt()];
          Maxage = in.readInt();
          Minage = in.readInt();
@@ -245,18 +247,9 @@ public void setMinage(int minage) {
          if (id != null) {
              dest.writeSerializable(id);
          }
-         dest.writeByte(name == null ? (byte) 0 : (byte) 1);
-         if (name != null) {
-             dest.writeString(name);
-         }
-         dest.writeByte(description == null ? (byte) 0 : (byte) 1);
-         if (description != null) {
-             dest.writeString(description);
-         }
-         dest.writeByte(organizerName == null ? (byte) 0 : (byte) 1);
-         if (organizerName != null) {
-             dest.writeString(organizerName);
-         }
+         dest.writeString(name);
+         dest.writeString(description);
+         dest.writeString(organizerName);
          dest.writeByte(organizerId == null ? (byte) 0 : (byte) 1);
          if (organizerId != null) {
              dest.writeSerializable(organizerId);
@@ -265,48 +258,37 @@ public void setMinage(int minage) {
              dest.writeByte((byte) 0);
          } else {
              dest.writeByte((byte) 1);
-             dest.writeParcelable(location, flags);
+             dest.writeList(location);
          }
-         dest.writeByte(dateOfPublish == null ? (byte) 0 : (byte) 1);
-         if (dateOfPublish != null) {
-             dest.writeStringList(dateOfPublish);
-         }
-         dest.writeByte(dateOfStart == null ? (byte) 0 : (byte) 1);
-         if (dateOfStart != null) {
-             dest.writeStringList(dateOfStart);
-         }
-         dest.writeByte(dateOfEnd == null ? (byte) 0 : (byte) 1);
-         if (dateOfEnd != null) {
-             dest.writeStringList(dateOfEnd);
-         }
+         dest.writeStringList(dateOfPublish);
+         dest.writeStringList(dateOfStart);
+         dest.writeStringList(dateOfEnd);
          dest.writeInt(duration);
          dest.writeByte(price == null ? (byte) 0 : (byte) 1);
          if (price != null) {
              dest.writeLong(price);
          }
          dest.writeInt(capacity);
-         dest.writeByte(ActivityImages == null ? (byte) 0 : (byte) 1);
-         if (ActivityImages != null) {
-             dest.writeStringList(ActivityImages);
-         }
+         dest.writeStringList(ActivityImages);
          dest.writeInt(activityCategorie.ordinal());
          dest.writeInt(Maxage);
          dest.writeInt(Minage);
      }
-        public static final Creator<ActivityDto> CREATOR = new Creator<ActivityDto>() {
-            @Override
-            public ActivityDto createFromParcel(Parcel in) {
-                return new ActivityDto(in);
-            }
 
-            @Override
-            public ActivityDto[] newArray(int size) {
-                return new ActivityDto[size];
-            }
-        };
+     public static final Creator<ActivityDto> CREATOR = new Creator<ActivityDto>() {
+         @Override
+         public ActivityDto createFromParcel(Parcel in) {
+             return new ActivityDto(in);
+         }
+
+         @Override
+         public ActivityDto[] newArray(int size) {
+             return new ActivityDto[size];
+         }
+     };
+
      @Override
      public int describeContents() {
          return 0;
      }
-
  }

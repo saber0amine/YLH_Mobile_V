@@ -19,7 +19,7 @@ public class Activity {
     private User organisteur ;
 
 
-    private Location location;
+    private List<Location> location;
 
 
     private LocalDateTime dateOfPublish;
@@ -29,7 +29,7 @@ public class Activity {
 
     private LocalDateTime dateOfEnd;
 
-    private Instant duration ;
+    private Long duration ;
 
     private Long price;
     private int capacity;
@@ -90,11 +90,11 @@ public String getName() {
     }
 
 
-    public Location getLocation() {
+    public List<Location> getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(List<Location> location) {
         this.location = location;
     }
 
@@ -123,11 +123,11 @@ public void setDateOfEnd(LocalDateTime dateOfEnd) {
     this.dateOfEnd = dateOfEnd;
 }
 
-public Instant getDuration() {
+public Long getDuration() {
     return duration;
 }
 
-public void setDuration(Instant duration) {
+public void setDuration(Long duration) {
     this.duration = duration;
 }
 

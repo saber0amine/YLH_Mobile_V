@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/gray"
+            android:background="@drawable/search_bacground"
             android:hint="Search Location ..."
             android:inputType="text"
             android:paddingLeft="8dp"

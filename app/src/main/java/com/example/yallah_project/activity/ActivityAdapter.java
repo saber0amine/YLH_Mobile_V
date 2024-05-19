@@ -55,7 +55,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
 
         holder.name.setText(activity.getName());
         holder.description.setText(activity.getDescription());
-  holder.category.setText(activity.getActivityCategorie().toString());
+  //holder.category.setText(activity.getActivityCategorie().toString());
         holder.price.setText(String.valueOf(activity.getPrice()));
         holder.capacity.setText(String.valueOf(activity.getCapacity()));
      /*   if(activity.getDateOfEnd() != null && !activity.getDateOfEnd().isEmpty() && activity.getDateOfStart() != null && !activity.getDateOfStart().isEmpty()) {

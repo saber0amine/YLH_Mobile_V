@@ -1,66 +1,128 @@
 package com.example.yallah_project.Fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.content.Intent;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.yallah_project.R;
+import com.example.yallah_project.activity.FormCreateActivityContainer;
+import com.example.yallah_project.activity.LocationAdapter;
+import com.example.yallah_project.activity.MapsActivity;
+import com.example.yallah_project.apis.ApiService;
+import com.example.yallah_project.model.Activity;
+import com.example.yallah_project.model.Location;
+import com.example.yallah_project.viewmodel.UserViewModel;
+import com.google.gson.Gson;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StepThree_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class StepThree_Fragment extends Fragment {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class StepThree_Fragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final int REQUEST_CODE_MAP = 1;
 
-    public StepThree_Fragment() {
-        // Required empty public constructor
-    }
+    private EditText editTextActivityName;
+    private EditText editTextActivityDescription;
+    private Button buttonNextStep1;
+    private Button buttonAddLocation;
+    private RecyclerView recyclerViewLocations;
+    private Button buttonPreviousStep2;
+    private Button buttonSubmitActivity;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StepThree_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StepThree_Fragment newInstance(String param1, String param2) {
-        StepThree_Fragment fragment = new StepThree_Fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private List<Location> locations = new ArrayList<>();
+    private UserViewModel userViewModel;
+    private List<MultipartBody.Part> imageParts;
+    private RequestBody activityBody;
+    private TextView serverResult;
+    private LocationAdapter locationAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step_three_, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_step_three_, container, false);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        buttonAddLocation = view.findViewById(R.id.button_add_location);
+        recyclerViewLocations = view.findViewById(R.id.recyclerView_locations);
+        buttonPreviousStep2 = view.findViewById(R.id.button_previous);
+        buttonSubmitActivity = view.findViewById(R.id.button_submit_activity);
+        serverResult = view.findViewById(R.id.serverResult);
+        buttonAddLocation.setOnClickListener(this);
+        buttonPreviousStep2.setOnClickListener(this);
+        buttonSubmitActivity.setOnClickListener(this);
+
+        // Initialize the RecyclerView and LocationAdapter with context
+        locationAdapter = new LocationAdapter(getContext(), locations);
+        recyclerViewLocations.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewLocations.setAdapter(locationAdapter);
+
+        return view;
     }
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.button_add_location) {
+            // Open MapsActivity to select location
+            Intent intent = new Intent(getActivity(), MapsActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_MAP);
+        } else if (v.getId() == R.id.button_previous) {
+            requireActivity().onBackPressed();
+        } else if (v.getId() == R.id.button_submit_activity) {
+            submitActivity();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_MAP && resultCode == RESULT_OK && data != null) {
+            double latitude = data.getDoubleExtra("latitude", 0);
+            double longitude = data.getDoubleExtra("longitude", 0);
+            String address = data.getStringExtra("address" );
+            Location location = new Location(address , latitude, longitude);
+            locations.add(location);
+            locationAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void submitActivity() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            ArrayList<String> imagePaths = bundle.getStringArrayList("filePaths");
+            String activityJson = bundle.getString("activity");
+            Log.i("CreateActivity", "from the step three " + imagePaths + " " + activityJson);
+
+            List<MultipartBody.Part> imageParts = new ArrayList<>();
+            for (String path : imagePaths) {
+                File file = new File(path);
+                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part part = MultipartBody.Part.createFormData("images", file.getName(), fileBody);
+                imageParts.add(part);
+            }
+
+            RequestBody activityBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), activityJson);
+            String locationsJson = new Gson().toJson(locations);
+            RequestBody locationsBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), locationsJson);
+
+            LiveData<String> response = userViewModel.createActivity(activityBody, imageParts, locationsBody);
+            response.observe(this, s -> serverResult.setText(s));
+        }
+    }
+
 }

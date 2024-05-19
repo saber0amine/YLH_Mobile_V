@@ -9,122 +9,153 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-
-
-        <!--        <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewImages"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:clipToPadding="false"
-                        android:background="@android:color/white" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fabAddImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="16dp"
-                        android:src="@drawable/baseline_add_24"
-                        android:tint="@android:color/white" />
-
-                </RelativeLayout>-->
-
-
-
-        <EditText
-            android:id="@+id/editTextName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Activity Name" />
+            android:hint="Activity Name">
 
-        <EditText
-            android:id="@+id/editTextDescription"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:background="@drawable/search_bacground"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"
-            android:minLines="3"
-            android:inputType="textMultiLine" />
+            android:hint="Description">
 
-        <Spinner
-            android:id="@+id/spinnerCategory"
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/search_bacground"
+
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Category"
-            />
+            android:hint="Category">
 
-        <EditText
-            android:id="@+id/editTextLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Location" />
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <EditText
-                android:id="@+id/editTextStartDate"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Start Date"
-                android:inputType="datetime" />
+                android:hint="Start Date">
 
-            <EditText
-                android:id="@+id/editTextEndDate"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@drawable/search_bacground"
+
+                    android:id="@+id/editTextStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="End Date"
-                android:inputType="datetime" />
+                android:hint="End Date">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@drawable/search_bacground"
+
+                    android:id="@+id/editTextEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextPrice"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Price" />
+            android:hint="Price">
 
-        <EditText
-            android:id="@+id/editTextCapacity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Capacity" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/search_bacground"
 
-        <EditText
-            android:id="@+id/editTextMaxAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Max Age" />
+                android:id="@+id/editTextPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextMinAge"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Min Age" />
+            android:hint="Capacity">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/search_bacground"
+
+                android:id="@+id/editTextCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max Age">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/search_bacground"
+
+                android:id="@+id/editTextMaxAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min Age">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/search_bacground"
+
+                android:id="@+id/editTextMinAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/serverResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginTop="16dp" />
+
         <Button
-            android:id="@+id/buttonCreateActivity"
+            android:id="@+id/buttonNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Activity" />
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="16dp"
+            android:text="Next" />
+
         <Button
             android:id="@+id/buttonBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back" />
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_button"
+            android:text="Previous" />
     </LinearLayout>
 </ScrollView>

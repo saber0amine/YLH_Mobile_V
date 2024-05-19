@@ -23,7 +23,6 @@ import com.example.yallah_project.activity.ImageAdapter;
 import com.example.yallah_project.viewmodel.UserViewModel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,11 +36,9 @@ public class StepTwo_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private ImageAdapter imageAdapter;
     private List<Uri> selectedImages = new ArrayList<>();
-    private List<File> uriTofiles   = new ArrayList<>() ;
-
-    private  List<String> filePaths = new ArrayList<>() ;
+    private List<String> filePaths = new ArrayList<>();
     private Button uploadButton;
-    private Button next  ;
+    private Button next;
     private UserViewModel userViewModel;
 
     @Nullable
@@ -52,25 +49,24 @@ public class StepTwo_Fragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.imageRecyclerView);
         uploadButton = view.findViewById(R.id.uploadButton2);
-        next = view.findViewById(R.id.next) ;
+        next = view.findViewById(R.id.next);
         imageAdapter = new ImageAdapter(selectedImages);
-        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1 ));
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         recyclerView.setAdapter(imageAdapter);
 
         uploadButton.setOnClickListener(v -> openImagePicker());
         next.setOnClickListener(v -> {
-            if ( selectedImages.size() > 0 ) {
+            if (!selectedImages.isEmpty()) {
                 StepOne_Fragment stepOne_fragment = new StepOne_Fragment();
-                Bundle bundle= new Bundle();
-                for (File file : uriTofiles) {
-                    filePaths.add(file.getAbsolutePath());
+                Bundle bundle = new Bundle();
+                for (Uri uri : selectedImages) {
+                    filePaths.add(uriTofile(uri, requireContext()).getAbsolutePath());
                 }
                 bundle.putStringArrayList("filePaths", (ArrayList<String>) filePaths);
-                Log.i("CreateActivity", "from step two to step one " + filePaths.toString() + "    " + filePaths.size());
+                Log.i("CreateActivity", "from step two to step one " + filePaths);
 
                 stepOne_fragment.setArguments(bundle);
-                ((FormCreateActivityContainer) requireActivity()).loadFragment( stepOne_fragment);
-
+                ((FormCreateActivityContainer) requireActivity()).loadFragment(stepOne_fragment);
             }
         });
         return view;
@@ -92,50 +88,34 @@ public class StepTwo_Fragment extends Fragment {
                 for (int i = 0; i < count; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
                     selectedImages.add(imageUri);
-                    uriTofiles.add(uriTofile(imageUri , requireContext())) ;
-                    Log.i("selectedImages", selectedImages.toString());
-
+                    imageAdapter.notifyDataSetChanged();
                 }
             } else if (data.getData() != null) {
                 Uri imageUri = data.getData();
                 selectedImages.add(imageUri);
+                imageAdapter.notifyDataSetChanged();
             }
-            imageAdapter.notifyDataSetChanged();
         }
-
     }
 
-
-    public File uriTofile(Uri uri , Context context )
-    {
-
+    private File uriTofile(Uri uri, Context context) {
         try {
             InputStream inputStream = context.getContentResolver().openInputStream(uri);
-            File file = new File(context.getCacheDir(), "tempImage");
+            File file = new File(context.getCacheDir(), "tempImage" + System.currentTimeMillis());
             file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
-            int read  ;
+            int read;
             while ((read = inputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, read);
             }
-
             fileOutputStream.flush();
             fileOutputStream.close();
             inputStream.close();
-            Log.i("CreateActivity", "from uri to file " + file.getAbsolutePath() + "    " + file.getName());
-
+            Log.i("CreateActivity", "from uri to file " + file.getAbsolutePath() + " " + file.getName());
             return file;
-
-
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-
 }

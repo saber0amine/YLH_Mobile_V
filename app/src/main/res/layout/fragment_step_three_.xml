@@ -1,14 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.StepThree_Fragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/button_add_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Location" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_locations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Previous" />
+        <Button
+            android:id="@+id/button_submit_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+        <TextView
+            android:id="@+id/serverResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red" />
+    </LinearLayout>
+</RelativeLayout>

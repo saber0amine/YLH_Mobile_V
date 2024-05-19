@@ -15,6 +15,7 @@ import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
 import com.example.yallah_project.dtos.OrgnizerActivitiesDto;
 import com.example.yallah_project.model.Activity;
+import com.example.yallah_project.model.Location;
 import com.example.yallah_project.model.User;
 import com.example.yallah_project.model.UserRole;
 import com.example.yallah_project.network.RetrofitClient;
@@ -48,9 +49,11 @@ public class UserViewModel extends AndroidViewModel {
         if(jwt !=null) {
             Log.i("jwt"  ,jwt)  ;
             apiService = RetrofitClient.getClient(jwt).create(ApiService.class);
-        }
-        else          Log.i("jwt"  ,"nooooo token")  ;
 
+        }
+        else   {       apiService = RetrofitClient.getClient(null).create(ApiService.class);
+        Log.i("jwt"  ,"nooooo token")  ;
+            }
     }
 
 
@@ -179,9 +182,9 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
         return  userRepository.getUserByEmail(userEmail) ;
     }
 
-    public LiveData<String> createActivity(RequestBody activity ,  List<MultipartBody.Part> imageParts ) {
+    public LiveData<String> createActivity(RequestBody activity ,  List<MultipartBody.Part> imageParts ,RequestBody locations) {
         MutableLiveData<String>  serverResponse = new MutableLiveData<>() ;
-        Call<ResponseBody> call = apiService.createActivity(activity , imageParts);
+        Call<ResponseBody> call = apiService.createActivity(activity , imageParts , locations);
         Log.i("CreateActivity", "from view model createActivity");
 
         call.enqueue(new Callback<ResponseBody>() {

@@ -6,6 +6,7 @@ import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.dtos.OrganisateurSwitchRequest;
 import com.example.yallah_project.dtos.OrgnizerActivitiesDto;
 import com.example.yallah_project.model.Activity;
+import com.example.yallah_project.model.Location;
 import com.example.yallah_project.model.User;
 
 import java.util.List;
@@ -38,7 +39,8 @@ Call<ResponseBody> switchToOrganisateur(@Part("governmentIdType") RequestBody go
     @POST("/add-Activity")
     Call<ResponseBody> createActivity(
             @Part("activity") RequestBody activity,
-            @Part List<MultipartBody.Part> images
+            @Part List<MultipartBody.Part> images ,
+            @Part("locations") RequestBody locations
     );
 
     @GET("get-All-Activities")
