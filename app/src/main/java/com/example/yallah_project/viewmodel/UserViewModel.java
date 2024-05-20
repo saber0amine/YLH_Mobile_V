@@ -184,6 +184,9 @@ public LiveData<User> getUserByEmailAndPassword(String email, String password) {
 
     public LiveData<String> createActivity(RequestBody activity ,  List<MultipartBody.Part> imageParts ,RequestBody locations) {
         MutableLiveData<String>  serverResponse = new MutableLiveData<>() ;
+        Log.i("CreateActivity", "from step one the Json Activity  " + activity.toString());
+        Log.i("CreateActivity", "from step one the Json Activity  " + locations.toString());
+
         Call<ResponseBody> call = apiService.createActivity(activity , imageParts , locations);
         Log.i("CreateActivity", "from view model createActivity");
 

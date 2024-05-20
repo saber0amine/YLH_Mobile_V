@@ -1,6 +1,7 @@
 package com.example.yallah_project.Fragment;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -19,15 +20,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.yallah_project.R;
 import com.example.yallah_project.activity.FormCreateActivityContainer;
-import com.example.yallah_project.activity.RegisterActivity;
 import com.example.yallah_project.model.Activity;
 import com.example.yallah_project.model.ActivityCategorie;
 import com.example.yallah_project.model.ActivityStatus;
+import com.example.yallah_project.model.LocalDateTimeDeserializer;
+import com.example.yallah_project.model.LocalDateTimeSerializer;
 import com.example.yallah_project.viewmodel.UserViewModel;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -39,7 +43,7 @@ import java.util.List;
 public class StepOne_Fragment extends Fragment implements View.OnClickListener {
 
     Spinner spinnerCategory;
-    EditText editTextName, editTextDescription, editTextStartDate, editTextEndDate, editTextPrice, editTextCapacity, editTextMaxAge, editTextMinAge;
+    com.google.android.material.textfield.TextInputEditText editTextName, editTextDescription, editTextStartDate, editTextEndDate, editTextPrice, editTextCapacity, editTextMaxAge, editTextMinAge, editTextPublishDate;
     Button buttonBack, buttonNext;
     UserViewModel userViewModel;
     List<String> selectedImages = new ArrayList<>();
@@ -73,32 +77,51 @@ public class StepOne_Fragment extends Fragment implements View.OnClickListener {
             selectedImages = bundle.getStringArrayList("filePaths");
         }
 
+        // Set up date and time pickers
+        editTextStartDate.setOnClickListener(this);
+        editTextEndDate.setOnClickListener(this);
+
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.editTextStartDate)
-        {
-            DatePicker() ;
-        }
-
-        if(v.getId() == R.id.editTextEndDate)
-        {
-            DatePicker() ;
-        }
-
-
-
-        if (v.getId() == R.id.buttonNext) {
+        if(v.getId() == R.id.editTextStartDate) {
+            showDateTimePicker(editTextStartDate);
+        } else if(v.getId() == R.id.editTextEndDate) {
+            showDateTimePicker(editTextEndDate);
+        } else if (v.getId() == R.id.buttonNext) {
             sendActivityToServer();
-        }
-
-        if (v.getId() == R.id.buttonBack) {
+        } else if (v.getId() == R.id.buttonBack) {
             requireActivity().onBackPressed();
         }
     }
 
+    private void showDateTimePicker(EditText editText) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getActivity(),
+                (view, year1, month1, dayOfMonth) -> {
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(
+                            getActivity(),
+                            (view1, hourOfDay, minute1) -> {
+                                LocalDateTime selectedDate = LocalDateTime.of(year1, month1 + 1, dayOfMonth, hourOfDay, minute1);
+                                String formattedDate = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+                                editText.setText(formattedDate);
+                            },
+                            hour, minute, true);
+                    timePickerDialog.show();
+                },
+                year, month, day);
+
+        datePickerDialog.show();
+    }
 
     private void sendActivityToServer() {
         Log.i("CreateActivity", "inside sendActivityToServer");
@@ -109,25 +132,19 @@ public class StepOne_Fragment extends Fragment implements View.OnClickListener {
         activity.setDescription(editTextDescription.getText().toString());
         activity.setPrice(Long.parseLong(editTextPrice.getText().toString()));
 
-        DateTimeFormatter formatter = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        }
-        LocalDateTime startDate = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startDate = LocalDateTime.parse(editTextStartDate.getText().toString(), formatter);
-        }
-        LocalDateTime endDate = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            endDate = LocalDateTime.parse(editTextEndDate.getText().toString(), formatter);
-        }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(editTextStartDate.getText().toString(), formatter);
+        LocalDateTime endDate = LocalDateTime.parse(editTextEndDate.getText().toString(), formatter);
+        LocalDateTime publishDate = LocalDateTime.now();
         activity.setDateOfStart(startDate);
         activity.setDateOfEnd(endDate);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            activity.setDuration(Duration.between(startDate, endDate).toMinutes()); // Storing duration in minutes or other appropriate unit
-        }
+        activity.setDateOfPublish(publishDate);
 
+        Duration duration = Duration.between(startDate, endDate);
+        long days = duration.toDays();
+        long hours = duration.toHours() % 24;
+        long minutes = duration.toMinutes() % 60;
+        activity.setDuration(Long.valueOf(String.format("%d days, %d hours, %d minutes", days, hours, minutes)));
         activity.setCapacity(Integer.parseInt(editTextCapacity.getText().toString()));
         activity.setMinAge(Integer.parseInt(editTextMinAge.getText().toString()));
         activity.setMaxAge(Integer.parseInt(editTextMaxAge.getText().toString()));
@@ -136,8 +153,12 @@ public class StepOne_Fragment extends Fragment implements View.OnClickListener {
         if (!selectedImages.isEmpty()) {
             activity.setActivityImages(selectedImages);
         }
-
-        String activityJson = new Gson().toJson(activity);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                .create();
+        String activityJson = gson.toJson(activity);  // Use the custom Gson instance
+        Log.i("CreateActivity", "from step one the Json Activity " + activityJson);
 
         Bundle bundle = new Bundle();
         bundle.putString("activity", activityJson);
@@ -148,38 +169,4 @@ public class StepOne_Fragment extends Fragment implements View.OnClickListener {
 
         ((FormCreateActivityContainer) requireActivity()).loadFragment(stepThree_fragment);
     }
-
-
-    private void DatePicker() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getActivity(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                LocalDateTime selectedDate = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    selectedDate = LocalDateTime.of(year, month + 1, dayOfMonth, hour, minute);
-                }
-                String formattedDate = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    formattedDate = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
-                }
-                if (editTextStartDate.isFocused()) {
-                    editTextStartDate.setText(formattedDate);
-                } else if (editTextEndDate.isFocused()) {
-                    editTextEndDate.setText(formattedDate);
-                }
-            }
-        }, year, month, day
-        );
-
-        datePickerDialog.show();
-    }
-
 }

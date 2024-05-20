@@ -80,7 +80,7 @@ private ImageView  image ;
 
             if (activity.getActivityImages() != null && !activity.getActivityImages().isEmpty()) {
                 String imagePath = activity.getActivityImages().get(0).replace("\\", "/");
-                String imageUrl = "http://10.0.2.2:8080/" + imagePath;
+                String imageUrl = "https://de22-105-71-4-58.ngrok-free.app/" + imagePath;
                 Log.i("gettingActivities", "corected url " + imageUrl);
 
                 Glide.with(this)

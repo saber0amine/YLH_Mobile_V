@@ -94,35 +94,37 @@
         android:paddingTop="4dp"
         android:textColor="@color/black" />
 
-    <!-- See More Button -->
+    <!-- See More and Book Now Buttons -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <Button
-        android:id="@+id/button_see_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:text="see more  "
-        android:textColor="@color/black"
-        android:background="@drawable/rounded_button"
-        android:padding="8dp"
-        android:textStyle="bold"
-        android:textSize="14sp" />
-    <Button
-        android:id="@+id/button_booking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="150dp"
-        android:text="Book Now  "
-        android:textColor="@color/black"
-        android:background="@drawable/rounded_button"
-        android:padding="8dp"
-        android:textStyle="bold"
-        android:textSize="14sp" />
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <Button
+            android:id="@+id/button_see_more"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="See More"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/button_booking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="Book Now"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_button"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

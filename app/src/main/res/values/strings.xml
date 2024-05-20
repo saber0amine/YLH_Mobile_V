@@ -5,4 +5,5 @@
     <string name="welcome_to_yallah">Let\'s add your government ID to verify your identity. You can upload an official document such as a passport, or national identity card. This helps us ensure that you are a legitimate user and comply with our security measures</string>
     <string name="open_nav" />
     <string name="close_nav" />
+    <string name="google_maps_key">AIzaSyCZ6Hhq4WdvfZmYAJOI7KG3KUnRV_CatVo</string>
 </resources>

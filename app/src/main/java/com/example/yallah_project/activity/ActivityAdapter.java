@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,14 +60,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
   //holder.category.setText(activity.getActivityCategorie().toString());
         holder.price.setText(String.valueOf(activity.getPrice()));
         holder.capacity.setText(String.valueOf(activity.getCapacity()));
-     /*   if(activity.getDateOfEnd() != null && !activity.getDateOfEnd().isEmpty() && activity.getDateOfStart() != null && !activity.getDateOfStart().isEmpty()) {
+     if(activity.getDateOfEnd() != null && !activity.getDateOfEnd().isEmpty() && activity.getDateOfStart() != null && !activity.getDateOfStart().isEmpty()) {
   holder.startDate.setText(String.join(", ", activity.getDateOfStart()));
 holder.endDate.setText(String.join(", ", activity.getDateOfEnd()));
-        }*/
+        }
 
         if (activity.getActivityImages() != null && !activity.getActivityImages().isEmpty()) {
             String imagePath = activity.getActivityImages().get(0).replace("\\", "/");
-            String imageUrl = "http://10.0.2.2:8080/" + imagePath;
+            String imageUrl = "https://de22-105-71-4-58.ngrok-free.app/" + imagePath;
             Log.i("gettingActivities", "corected url " + imageUrl);
 
             Glide.with(context)
@@ -92,6 +94,8 @@ holder.endDate.setText(String.join(", ", activity.getDateOfEnd()));
             intent.putExtra("activity", activity);
             context.startActivity(intent);
         });
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
+        holder.itemView.startAnimation(animation);
 
     }
 

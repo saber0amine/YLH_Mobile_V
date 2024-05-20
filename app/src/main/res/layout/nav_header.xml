@@ -1,77 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-      android:background="@drawable/header"
+    android:background="@drawable/header"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-       >
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userProfile"
+        android:id="@+id/userProfileCard"
         android:layout_width="100dp"
         android:layout_height="85dp"
-        android:src="@drawable/img_1"
-        app:civ_border_color="@color/colorPrimary"
-        app:civ_border_width="2dp" />
+        app:cardCornerRadius="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userProfile"
+            android:layout_width="100dp"
+            android:layout_height="85dp"
+            android:src="@drawable/img_1"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2dp" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/bottom_btn2"
-            app:tint="@color/lavender"/>
-        <TextView
-             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Welcome 🤗"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    <TextView
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="24dp"
         android:text="Android Knowledge"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/userProfileCard"
+        app:layout_constraintTop_toTopOf="@id/userProfileCard" />
 
-
-    </LinearLayout>
-    <LinearLayout
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/baseline_email_24"
-        app:tint="@color/lavender"/>
+        android:layout_marginStart="32dp"
+        android:text="Welcome 🤗"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/userProfileCard"
+        app:layout_constraintTop_toBottomOf="@id/header_name" />
+
     <TextView
         android:id="@+id/header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:text="SABERAMINE000@GMAIL.COM"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
-    </LinearLayout>
+        app:chipBackgroundColor="@color/colorPrimary"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="99dp" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

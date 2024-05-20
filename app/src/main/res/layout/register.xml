@@ -1,162 +1,187 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="20dp"
-    android:background="@drawable/button_welcome_color">
+    android:background="@color/white">
 
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="left|top"
-        android:layout_marginLeft="0dp"
-
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="-40dp"
-        android:src="@drawable/img_1"
-
-        />
-
-
-
-
-    <TextView
-    android:id="@+id/registerTitle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Welcome to Yallah"
-    android:textStyle="bold"
-    android:textSize="30sp"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="40dp"
-    android:layout_marginBottom="20dp" />
-
-    <LinearLayout
+    <!-- Circular Logo for Progress -->
+    <RelativeLayout
+        android:id="@+id/progressOverlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="16dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ProfilePicture"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/baseline_account_circle_24"
-            app:civ_border_width="2dp"
-             android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent"
+        android:background="@color/lavender"
+        android:visibility="gone"
+        android:gravity="center">
 
         <ImageView
-            android:id="@+id/uploadButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_add_photo_alternate_24"
-            android:contentDescription="Upload Image"
+            android:id="@+id/logoImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/img_1"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:animateLayoutChanges="true" />
 
-        <TextView
-            android:id="@+id/uploadLabel"
-            android:layout_width="wrap_content"
+        <!-- Blurred Background -->
+        <ImageView
+            android:id="@+id/blurredBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@color/white"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
+    <!-- Registration Form -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Upload Image"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <!-- Title -->
+            <TextView
+                android:id="@+id/registerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Yallah"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp" />
 
+            <!-- Profile Picture -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center_horizontal">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ProfilePicture"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/baseline_account_circle_24"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/lavender"
+                    android:layout_centerHorizontal="true" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:max="100"
-        android:progress="45"
-        android:visibility="gone"
-        />
+                <ImageView
+                    android:id="@+id/uploadButtonImage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/baseline_add_photo_alternate_24"
+                    android:contentDescription="Upload Image"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:tint="@color/black"
+                    android:layout_alignBottom="@+id/ProfilePicture"
+                    android:layout_alignEnd="@+id/ProfilePicture"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp" />
+            </RelativeLayout>
 
+            <!-- Form Fields -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
-    <EditText
-    android:id="@+id/registerName"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Full Name"
-    android:inputType="text"
-    android:layout_marginBottom="16dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:hint="Full Name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-<EditText
-    android:id="@+id/registerEmail"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Email"
-    android:inputType="textEmailAddress"
-    android:layout_marginBottom="16dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
-<EditText
-    android:id="@+id/registerPassword"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Password"
-    android:inputType="textPassword"
-    android:layout_marginBottom="16dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerEmail"
+                    android:background="@color/white"
 
-<EditText
-    android:id="@+id/registerAge"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Birth day"
-    android:inputType="none"
-    android:focusable="false"
-    android:clickable="true"
-    android:layout_marginBottom="16dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:background="@color/white"
 
-<Button
-    android:id="@+id/loginButton2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Login"
-     android:textColor="@color/white"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:background="@drawable/rounded_button"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    android:layout_marginBottom="8dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
 
-<Button
-    android:id="@+id/registerButton2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Register"
-     android:textColor="@color/white"
-    android:textSize="20sp"
-    android:background="@drawable/rounded_button"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Birth Date"
+                    android:background="@color/white"
+                    android:focusable="false"
+                    android:clickable="true" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    android:textStyle="bold" />
+            <!-- Buttons -->
+            <Button
+                android:id="@+id/loginButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_button"
+                android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:id="@+id/registerErrors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        android:textSize="30dp"
+            <Button
+                android:id="@+id/registerButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_button" />
 
-        />
-
-</LinearLayout>
+            <!-- Error Message -->
+            <TextView
+                android:id="@+id/registerErrors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,64 +1,58 @@
 package com.example.yallah_project.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yallah_project.R;
-import com.example.yallah_project.apis.SpringService;
 
-import java.io.IOException;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
-
-
-    private Button getStartedButton;
+    private Button   loginButton, registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkLoginUsers() ;
-        getStartedButton  =findViewById(R.id.GetStartedButton);
-        getStartedButton.setOnClickListener(this);
 
+        //getStartedButton = findViewById(R.id.GetStartedButton);
+        loginButton = findViewById(R.id.LoginButton);
+        registerButton = findViewById(R.id.RegisterButton);
 
+       // getStartedButton.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
 
-    }
-
-    private void checkLoginUsers() {
-         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("user_data", MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", null);
-        String email = sharedPreferences.getString("email", null);
-
-        if (username != null && email != null) {
-
-        }
+        VideoView videoView = findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.welcomevideo);
+        videoView.setVideoURI(uri);
+        videoView.start();
+        videoView.setOnPreparedListener(mp -> mp.setLooping(true));  // Loop the video
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.GetStartedButton) {
+     /*        if(v.getId() ==  R.id.GetStartedButton ) {
+                Intent getStartedIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(getStartedIntent);
 
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+                }*/
+
+        if(v.getId() ==  R.id.LoginButton )
+        {Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+          }
+
+        if(v.getId() ==  R.id.RegisterButton )               {
+            Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+
         }
-
+        }
     }
 
-
-
-
-}

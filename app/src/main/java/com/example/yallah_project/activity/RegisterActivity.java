@@ -2,7 +2,6 @@ package com.example.yallah_project.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,9 +10,8 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -26,93 +24,82 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.yallah_project.R;
 import com.example.yallah_project.model.User;
 import com.example.yallah_project.model.UserRole;
-import com.example.yallah_project.viewmodel.UserViewModel  ;
+import com.example.yallah_project.viewmodel.UserViewModel;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.text.ParseException  ;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener  {
-    private static final int PICK_IMAGE_REQUEST = 1;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button registerButton ;
-    private Button loginbutton ;
-
-    private EditText registerName ;
-    private EditText registerEmail ;
-    private EditText registerPassword ;
-    private EditText registerAge ;
-     private TextView registerError ;
-
-     private ImageView uploadButton2 ;
-
-     private Bitmap profileBitmap ;
-     private de.hdodenhof.circleimageview.CircleImageView ProfilePicture ;
-
-     private ProgressBar progressBar ;
-     private UserViewModel userViewModel ;
-
+    private Button registerButton;
+    private Button loginButton;
+    private TextInputEditText registerName, registerEmail, registerPassword, registerAge;
+    private TextView registerError;
+    private ImageView uploadButton2;
+    private Bitmap profileBitmap;
+    private de.hdodenhof.circleimageview.CircleImageView profilePicture;
+    private RelativeLayout progressOverlay;
+    private ImageView logoImageView;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register) ;
-        registerButton =findViewById(R.id.registerButton2) ;
-        registerButton.setOnClickListener(this) ;
-        loginbutton =findViewById(R.id.loginButton2) ;
-        loginbutton.setOnClickListener(this) ;
-        uploadButton2 = findViewById(R.id.uploadButton2) ;
-        uploadButton2.setOnClickListener(this) ;
-        ProfilePicture = findViewById(R.id.ProfilePicture) ;
-        registerName =findViewById(R.id.registerName) ;
-         registerEmail = findViewById(R.id.registerEmail);
-         registerPassword = findViewById(R.id.registerPassword);
-         registerAge = findViewById(R.id.registerAge);
-         registerAge.setOnClickListener(this);
-          registerError = findViewById(R.id.registerErrors) ;
-        progressBar = findViewById(R.id.progressBar) ;
+        setContentView(R.layout.register);
 
+        registerButton = findViewById(R.id.registerButton2);
+        registerButton.setOnClickListener(this);
+        loginButton = findViewById(R.id.loginButton2);
+        loginButton.setOnClickListener(this);
+        uploadButton2 = findViewById(R.id.uploadButtonImage);
+        uploadButton2.setOnClickListener(this);
+        profilePicture = findViewById(R.id.ProfilePicture);
+        registerName = findViewById(R.id.registerName);
+        registerEmail = findViewById(R.id.registerEmail);
+        registerPassword = findViewById(R.id.registerPassword);
+        registerAge = findViewById(R.id.registerAge);
+        registerAge.setOnClickListener(this);
+        registerError = findViewById(R.id.registerErrors);
+        progressOverlay = findViewById(R.id.progressOverlay);
+        logoImageView = findViewById(R.id.logoImageView);
 
-          userViewModel = new ViewModelProvider(this).get(UserViewModel.class) ;
-
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.uploadButton2) {
-            AddProfilePicture() ;
+            addProfilePicture();
         }
 
-
-        if(v.getId() == R.id.registerAge) {
-          DatePickerForAge() ;
+        if (v.getId() == R.id.registerAge) {
+            datePickerForAge();
         }
 
-        if ( v.getId() == R.id.registerButton2){
-           if ( !registerEmail.getText().toString().isEmpty() &&
-                !registerName.getText().toString().isEmpty() &&
-                !registerPassword.getText().toString().isEmpty() &&
-                !registerAge.getText().toString().isEmpty() )
-           {
-               progressBar.setVisibility(View.VISIBLE);
-               saveUser() ;
+        if (v.getId() == R.id.registerButton2) {
+            if (!registerEmail.getText().toString().isEmpty() &&
+                    !registerName.getText().toString().isEmpty() &&
+                    !registerPassword.getText().toString().isEmpty() &&
+                    !registerAge.getText().toString().isEmpty()) {
 
-           }
-           else {
-               registerError.setText("Fill all fields and try again !");
-           }
+                showProgressOverlay();
+                saveUser();
+            } else {
+                registerError.setText("Fill all fields and try again!");
+                registerError.setVisibility(View.VISIBLE);
+            }
         }
 
-        if ( v.getId() == R.id.loginButton2){
+        if (v.getId() == R.id.loginButton2) {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-
-
     }
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(
@@ -120,39 +107,45 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
                     try {
                         profileBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        ProfilePicture.setImageBitmap(profileBitmap);
+                        profilePicture.setImageBitmap(profileBitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             });
 
-    private void AddProfilePicture() {
+    private void addProfilePicture() {
         mGetContent.launch("image/*");
     }
 
-
-    private void DatePickerForAge() {
-        Calendar calendar = Calendar.getInstance() ;
-        int annee = calendar.get(Calendar.YEAR) ;
-        int mois = calendar.get(Calendar.MONTH) ;
-        int jour = calendar.get(Calendar.DAY_OF_MONTH) ;
+    private void datePickerForAge() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                registerAge.setText(dayOfMonth +"/" +(month  + 1 ) + "/" + year ) ;
+                registerAge.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
             }
-        } , annee , mois , jour ) ;
+        }, year, month, day);
 
         datePickerDialog.show();
     }
 
+    private void showProgressOverlay() {
+        progressOverlay.setVisibility(View.VISIBLE);
+        logoImageView.animate().rotationBy(360).setDuration(1000).setDuration(android.view.animation.Animation.INFINITE);
+    }
 
+    private void hideProgressOverlay() {
+        progressOverlay.setVisibility(View.GONE);
+        logoImageView.clearAnimation();
+    }
 
     public void saveUser() {
         User user = new User();
@@ -160,13 +153,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         user.setEmail(registerEmail.getText().toString());
         user.setPassword(registerPassword.getText().toString());
         user.setRole(UserRole.USER);
+
         String dateString = registerAge.getText().toString();
         SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
         try {
             Date date = inputFormat.parse(dateString);
-            String formattedDate = outputFormat.format(date);
-            //user.setAge(outputFormat.parse(formattedDate));
+           // user.setAge(outputFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -177,22 +171,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             byte[] imageBytes = baos.toByteArray();
             user.setProfilePicture(imageBytes);
         }
-        LiveData<Boolean> serverRep = userViewModel.register(user);
-        serverRep.observe(this , response -> {
-            if(serverRep.getValue() != null && serverRep.getValue() == true){
-                 progressBar.setVisibility(View.GONE);
+
+        LiveData<Boolean> serverResponse = userViewModel.register(user);
+        serverResponse.observe(this, response -> {
+            hideProgressOverlay();
+            if (response != null && response) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
-            }
-            else {
+                finish();
+            } else {
                 registerError.setText("User Registration Failed");
+                registerError.setVisibility(View.VISIBLE);
             }
         });
-
-
-
     }
-
-
-
 }

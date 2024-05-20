@@ -1,33 +1,104 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Instruction Text -->
+        <TextView
+            android:id="@+id/instructionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search and select a location on the map below"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Location Search Bar -->
+ <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/searchLocationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    app:endIconMode="clear_text">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/searchLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search location"
+        android:padding="12dp"
+        android:drawablePadding="12dp"
+        android:drawableStart="@drawable/search_icon"
+        android:background="@drawable/search_bacground" />
+
+</com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Map Fragment -->
+        <fragment
+            android:id="@+id/map_container"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Add Location Button -->
         <Button
             android:id="@+id/button_add_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Location" />
+            android:text="Add Location"
+            android:background="@drawable/rounded_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp" />
+
+        <!-- RecyclerView for displaying selected locations -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_locations"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/button_previous"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Previous" />
-        <Button
-            android:id="@+id/button_submit_activity"
-            android:layout_width="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Previous and Submit Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/button_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Previous"
+                android:background="@drawable/rounded_button"                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/button_submit_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:background="@drawable/rounded_button" />
+        </LinearLayout>
+
+        <!-- Server Result Text -->
         <TextView
             android:id="@+id/serverResult"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/red" />
+            android:textColor="@color/red"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp" />
+
     </LinearLayout>
+ </ScrollView>
 </RelativeLayout>

@@ -80,8 +80,10 @@ CheckUserLogin() ;
       if(user != null) {
       LiveData<User> userName = userViewModel.getUserByEmailAndPassword(user.getEmail() , user.getPassword()   ) ;
       userName.observe(this , user1 -> {
+          if(user1!= null ) {
           String[] paramValue  = { user1.getName() , user1.getEmail() , jwt} ;
           SharedPrefer.storeUserData(this , paramName , paramValue) ;
+          }
       });
           }
     }
