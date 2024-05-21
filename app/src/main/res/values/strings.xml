@@ -6,4 +6,13 @@
     <string name="open_nav" />
     <string name="close_nav" />
     <string name="google_maps_key">AIzaSyCZ6Hhq4WdvfZmYAJOI7KG3KUnRV_CatVo</string>
+    <string name="name" />
+    <string name="email" />
+    <string name="password" />
+    <string name="age" />
+    <string name="register" />
+    <string name="login" />
+    <string name="upload_image" />
+    <string name="submit" />
+    <string name="back" />
 </resources>

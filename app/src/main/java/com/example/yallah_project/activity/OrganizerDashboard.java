@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yallah_project.R;
+import com.example.yallah_project.adapter.DashboardAdapter;
 import com.example.yallah_project.dtos.OrgnizerActivitiesDto;
 import com.example.yallah_project.model.ActivityCategorie;
 import com.example.yallah_project.viewmodel.UserViewModel;

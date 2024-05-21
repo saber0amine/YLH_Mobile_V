@@ -47,7 +47,7 @@ import java.util.UUID;
      private  List<String>  dateOfEnd;
 
      @SerializedName("duration")
-     private  int duration;
+     private  String duration;
 
      @SerializedName("price")
      private Long price;
@@ -126,11 +126,11 @@ public void setLocation(List<Location> location) {
          return dateOfEnd;
      }
 
-     public  int  getDuration() {
+     public  String  getDuration() {
          return duration;
      }
 
-     public void setDuration( int  duration) {
+     public void setDuration( String  duration) {
          this.duration = duration;
      }
 
@@ -232,7 +232,7 @@ public void setMinage(int minage) {
          dateOfPublish = in.createStringArrayList();
          dateOfStart = in.createStringArrayList();
          dateOfEnd = in.createStringArrayList();
-         duration = in.readInt();
+         duration = in.readString();
          price = in.readByte() == 0 ? null : in.readLong();
          capacity = in.readInt();
          ActivityImages = in.createStringArrayList();
@@ -263,7 +263,7 @@ public void setMinage(int minage) {
          dest.writeStringList(dateOfPublish);
          dest.writeStringList(dateOfStart);
          dest.writeStringList(dateOfEnd);
-         dest.writeInt(duration);
+         dest.writeString(duration);
          dest.writeByte(price == null ? (byte) 0 : (byte) 1);
          if (price != null) {
              dest.writeLong(price);

@@ -10,20 +10,16 @@ import android.os.Bundle;
         import android.view.View;
         import android.view.ViewGroup;
         import com.example.yallah_project.R;
-        import com.example.yallah_project.activity.BookedActivitiesAdapter;
+        import com.example.yallah_project.adapter.BookedActivitiesAdapter;
         import com.example.yallah_project.dtos.ActivityDto;
 import com.example.yallah_project.model.ActivityCategorie;
 import com.example.yallah_project.viewmodel.UserViewModel;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
-        import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-        import com.github.mikephil.charting.data.LineData;
-        import com.github.mikephil.charting.data.LineDataSet;
-        import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieData;
         import com.github.mikephil.charting.data.PieDataSet;
         import com.github.mikephil.charting.data.PieEntry;
         import com.github.mikephil.charting.utils.ColorTemplate;
@@ -69,8 +65,13 @@ public class BookedActivitiesFragment extends Fragment {
 
 private void setupBarChart(List<ActivityDto> activities) {
     List<BarEntry> entries = new ArrayList<>();
+    if(activities == null || activities.isEmpty()) {
+        return;
+    }
     for (int i = 0; i < activities.size(); i++) {
-        entries.add(new BarEntry(i, activities.get(i).getDuration()));
+        String duration = activities.get(i).getDuration();
+        int totalMinutes = convertDurationToMinutes(duration);
+        entries.add(new BarEntry(i, totalMinutes));
     }
 
     BarDataSet dataSet = new BarDataSet(entries, "Activity Duration");
@@ -80,8 +81,19 @@ private void setupBarChart(List<ActivityDto> activities) {
     barChart.setData(data);
     barChart.invalidate(); // refresh
 }
+    private int convertDurationToMinutes(String duration) {
+        String[] parts = duration.split(", ");
+        int days = Integer.parseInt(parts[0].split(" ")[0]);
+        int hours = Integer.parseInt(parts[1].split(" ")[0]);
+        int minutes = Integer.parseInt(parts[2].split(" ")[0]);
+
+        return days * 24 * 60 + hours * 60 + minutes;
+    }
 
 private void setupPieChart(List<ActivityDto> activities) {
+        if(activities == null || activities.isEmpty()) {
+            return;
+        }
     Map<ActivityCategorie, Integer> categoryCount = new HashMap<>();
     for (ActivityDto activity : activities) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -98,7 +110,7 @@ private void setupPieChart(List<ActivityDto> activities) {
     dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
     PieData data = new PieData(dataSet);
     pieChart.setData(data);
-    pieChart.invalidate(); // refresh
+    pieChart.invalidate();
 }
 
 

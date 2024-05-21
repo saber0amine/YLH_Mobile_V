@@ -22,14 +22,14 @@ public class Activity {
     private List<Location> location;
 
 
-    private LocalDateTime dateOfPublish;
+        private LocalDateTime dateOfPublish;
 
 
-    private LocalDateTime dateOfStart;
+        private LocalDateTime dateOfStart;
 
-    private LocalDateTime dateOfEnd;
+        private LocalDateTime dateOfEnd;
 
-    private Long duration ;
+    private String duration ;
 
     private Long price;
     private int capacity;
@@ -123,11 +123,11 @@ public void setDateOfEnd(LocalDateTime dateOfEnd) {
     this.dateOfEnd = dateOfEnd;
 }
 
-public Long getDuration() {
+public String getDuration() {
     return duration;
 }
 
-public void setDuration(Long duration) {
+public void setDuration(String duration) {
     this.duration = duration;
 }
 

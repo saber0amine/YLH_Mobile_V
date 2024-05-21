@@ -29,7 +29,7 @@ public class User  implements Parcelable {
     private String password;
 
     @ColumnInfo(name = "age")
-    private Date age;
+    private String  age;
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "UserPicture")
     private byte[] profilePicture;
 
@@ -95,11 +95,11 @@ public class User  implements Parcelable {
         this.profilePicture = profilePicture;
     }
 
-    public Date getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Date age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -149,7 +149,7 @@ public class User  implements Parcelable {
         email = in.readString();
         password = in.readString();
         long tmpAge = in.readLong();
-        age = tmpAge != -1 ? new Date(tmpAge) : null;
+        age = in.readString();
         profilePicture = in.createByteArray();
         role = (UserRole) in.readSerializable();
     }
@@ -177,8 +177,8 @@ public class User  implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(email);
         parcel.writeString(password);
-        parcel.writeLong(age != null ? age.getTime() : -1);
-        parcel.writeByteArray(profilePicture);
+        parcel.writeString(age);
+         parcel.writeByteArray(profilePicture);
         parcel.writeSerializable(role);
         parcel.writeByteArray(IdentityPicture);
     }

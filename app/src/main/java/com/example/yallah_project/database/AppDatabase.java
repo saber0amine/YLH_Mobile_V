@@ -11,7 +11,7 @@ import com.example.yallah_project.dao.UserDao;
 import com.example.yallah_project.model.User;
 import com.example.yallah_project.model.Converters;
 
-@Database(entities = {User.class}, version = 2)
+@Database(entities = {User.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();

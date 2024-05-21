@@ -20,28 +20,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //getStartedButton = findViewById(R.id.GetStartedButton);
-        loginButton = findViewById(R.id.LoginButton);
+         loginButton = findViewById(R.id.LoginButton);
         registerButton = findViewById(R.id.RegisterButton);
 
-       // getStartedButton.setOnClickListener(this);
-        loginButton.setOnClickListener(this);
+         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
 
         VideoView videoView = findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.welcomevideo);
         videoView.setVideoURI(uri);
         videoView.start();
-        videoView.setOnPreparedListener(mp -> mp.setLooping(true));  // Loop the video
+        videoView.setOnPreparedListener(mp -> mp.setLooping(true));
     }
-
     @Override
     public void onClick(View v) {
-     /*        if(v.getId() ==  R.id.GetStartedButton ) {
-                Intent getStartedIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(getStartedIntent);
-
-                }*/
 
         if(v.getId() ==  R.id.LoginButton )
         {Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);

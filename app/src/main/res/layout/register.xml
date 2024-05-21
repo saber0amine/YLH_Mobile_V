@@ -1,187 +1,165 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="@color/white">
-
-    <!-- Circular Logo for Progress -->
-    <RelativeLayout
-        android:id="@+id/progressOverlay"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lavender"
-        android:visibility="gone"
-        android:gravity="center">
+        android:padding="20dp"
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:background="@drawable/img_1"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:animateLayoutChanges="true" />
-
-        <!-- Blurred Background -->
-        <ImageView
-            android:id="@+id/blurredBackground"
+        <!-- Progress Overlay -->
+        <RelativeLayout
+            android:id="@+id/progressOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="@color/white"
-            android:visibility="visible" />
+             android:visibility="gone"
+            android:gravity="center">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/img_1"
+                 android:layout_centerInParent="true"/>
 
-    <!-- Registration Form -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:fillViewport="true">
+        </RelativeLayout>
 
-        <LinearLayout
+        <!-- Content Layout -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <!-- Title -->
-            <TextView
-                android:id="@+id/registerTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome to Yallah"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:textColor="@color/black"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Profile Picture -->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:orientation="vertical"
+                android:padding="16dp"
                 android:gravity="center_horizontal">
 
+                <!-- Circle ImageView for Profile Picture -->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ProfilePicture"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:src="@drawable/baseline_account_circle_24"
+                    android:src="@drawable/face"
+                    app:civ_border_color="@android:color/white"
                     app:civ_border_width="2dp"
-                    app:civ_border_color="@color/lavender"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_gravity="center_horizontal"
+                 />
 
+                <!-- Upload Button -->
                 <ImageView
                     android:id="@+id/uploadButtonImage"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:src="@drawable/baseline_add_photo_alternate_24"
-                    android:contentDescription="Upload Image"
+                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-1dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    app:tint="@color/black"
-                    android:layout_alignBottom="@+id/ProfilePicture"
-                    android:layout_alignEnd="@+id/ProfilePicture"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp" />
-            </RelativeLayout>
+                    android:padding="5dp"/>
 
-            <!-- Form Fields -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerName"
+                <!-- Name Input -->
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:hint="Full Name"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Full name"
+                    android:textColorHint="@color/black"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="24dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/registerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerEmail"
-                    android:background="@color/white"
+                </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Email Input -->
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
+                     android:hint="Adress Email"
+                    android:textColorHint="@color/black"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="12dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/registerEmail"
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Password Input -->
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:background="@color/white"
+                    android:hint="Strong Password"
+                    android:textColorHint="@color/black"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="12dp">
 
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/registerPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerAge"
+                <!-- Age Input -->
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Birth Date"
-                    android:background="@color/white"
-                    android:focusable="false"
-                    android:clickable="true" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:textColorHint="@color/black"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="12dp">
 
-            <!-- Buttons -->
-            <Button
-                android:id="@+id/loginButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@drawable/rounded_button"
-                android:layout_marginBottom="8dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/registerAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:inputType="none"/>
 
-            <Button
-                android:id="@+id/registerButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Register"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@drawable/rounded_button" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Error Message -->
-            <TextView
-                android:id="@+id/registerErrors"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:layout_marginTop="16dp"
-                android:gravity="center_horizontal" />
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+                <!-- Error Message -->
+                <TextView
+                    android:id="@+id/registerErrors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/design_default_color_error"
+                    android:visibility="gone"
+                    android:textSize="14sp"/>
+
+             <!-- Register Button -->
+    <Button
+        android:id="@+id/registerButton2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="25sp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_button"
+        android:elevation="4dp"
+    />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="25sp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_button"
+        android:elevation="4dp"
+    />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>

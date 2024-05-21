@@ -1,18 +1,23 @@
 package com.example.yallah_project.activity;
 
+import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -29,11 +34,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,12 +48,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout progressOverlay;
     private ImageView logoImageView;
     private UserViewModel userViewModel;
+    private ObjectAnimator rotation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-
         registerButton = findViewById(R.id.registerButton2);
         registerButton.setOnClickListener(this);
         loginButton = findViewById(R.id.loginButton2);
@@ -70,11 +71,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         logoImageView = findViewById(R.id.logoImageView);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+        rotation = ObjectAnimator.ofFloat(logoImageView, "rotation", 0f, 360f);
+        rotation.setDuration(1000);
+        rotation.setRepeatCount(ObjectAnimator.INFINITE);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.uploadButton2) {
+        if (v.getId() == R.id.uploadButtonImage) {
             addProfilePicture();
         }
 
@@ -83,23 +88,75 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (v.getId() == R.id.registerButton2) {
-            if (!registerEmail.getText().toString().isEmpty() &&
-                    !registerName.getText().toString().isEmpty() &&
-                    !registerPassword.getText().toString().isEmpty() &&
-                    !registerAge.getText().toString().isEmpty()) {
-
+            if (isValidInput()) {
                 showProgressOverlay();
                 saveUser();
             } else {
-                registerError.setText("Fill all fields and try again!");
-                registerError.setVisibility(View.VISIBLE);
+                showErrorMessage("Fill all fields and try again!");
             }
         }
 
         if (v.getId() == R.id.loginButton2) {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
+            navigateToLogin();
         }
+    }
+
+    private boolean isValidInput() {
+        return !registerEmail.getText().toString().isEmpty() &&
+                !registerName.getText().toString().isEmpty() &&
+                !registerPassword.getText().toString().isEmpty() &&
+                !registerAge.getText().toString().isEmpty();
+    }
+
+    private void showErrorMessage(String message) {
+        registerError.setText(message);
+        registerError.setVisibility(View.VISIBLE);
+    }
+
+    private void navigateToLogin() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    private void showProgressOverlay() {
+        progressOverlay.setVisibility(View.VISIBLE);
+        rotation.start();
+    }
+
+    private void hideProgressOverlay() {
+        progressOverlay.setVisibility(View.GONE);
+        rotation.cancel();
+    }
+
+    private void saveUser() {
+        User user = new User();
+        user.setName(registerName.getText().toString());
+        user.setEmail(registerEmail.getText().toString());
+        user.setPassword(registerPassword.getText().toString());
+        user.setRole(UserRole.USER);
+        user.setAge((registerAge.getText().toString()));
+
+        if (profileBitmap != null) {
+            Bitmap resizedBitmap = resizeImage(profileBitmap);
+            user.setProfilePicture(compressImage(resizedBitmap));
+        }
+
+        LiveData<Boolean> serverResponse = userViewModel.register(user);
+        serverResponse.observe(this, response -> {
+            hideProgressOverlay();
+            if (response != null && response) {
+                navigateToLogin();
+                finish();
+            } else {
+                showErrorMessage("User Registration Failed");
+            }
+        });
+    }
+
+    private byte[] compressImage(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        return baos.toByteArray();
     }
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(
@@ -107,82 +164,73 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    try {
-                        profileBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        profilePicture.setImageBitmap(profileBitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (uri != null) {
+                        handleImageUri(uri);
                     }
                 }
             });
+
+    private void handleImageUri(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+            long imageSize = cursor.getLong(sizeIndex);
+            cursor.close();
+
+            if (imageSize > 10 * 1024 * 1024) {
+                Toast.makeText(RegisterActivity.this, "Image size must be less than 10MB", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        try {
+            profileBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            profilePicture.setImageBitmap(profileBitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void addProfilePicture() {
         mGetContent.launch("image/*");
     }
 
     private void datePickerForAge() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                registerAge.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-            }
-        }, year, month, day);
-
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        registerAge.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                    }
+                }, year, month, day);
         datePickerDialog.show();
     }
 
-    private void showProgressOverlay() {
-        progressOverlay.setVisibility(View.VISIBLE);
-        logoImageView.animate().rotationBy(360).setDuration(1000).setDuration(android.view.animation.Animation.INFINITE);
-    }
+    private Bitmap resizeImage(Bitmap originalBitmap) {
+        int width = originalBitmap.getWidth();
+        int height = originalBitmap.getHeight();
+        int maxWidth = 800; // Define your maximum width
+        int maxHeight = 800; // Define your maximum height
+        if (width > maxWidth || height > maxHeight) {
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
 
-    private void hideProgressOverlay() {
-        progressOverlay.setVisibility(View.GONE);
-        logoImageView.clearAnimation();
-    }
-
-    public void saveUser() {
-        User user = new User();
-        user.setName(registerName.getText().toString());
-        user.setEmail(registerEmail.getText().toString());
-        user.setPassword(registerPassword.getText().toString());
-        user.setRole(UserRole.USER);
-
-        String dateString = registerAge.getText().toString();
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
-        try {
-            Date date = inputFormat.parse(dateString);
-           // user.setAge(outputFormat.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (profileBitmap != null) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            profileBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] imageBytes = baos.toByteArray();
-            user.setProfilePicture(imageBytes);
-        }
-
-        LiveData<Boolean> serverResponse = userViewModel.register(user);
-        serverResponse.observe(this, response -> {
-            hideProgressOverlay();
-            if (response != null && response) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > ratioBitmap) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
             } else {
-                registerError.setText("User Registration Failed");
-                registerError.setVisibility(View.VISIBLE);
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
             }
-        });
+            return Bitmap.createScaledBitmap(originalBitmap, finalWidth, finalHeight, true);
+        } else {
+            return originalBitmap;
+        }
     }
+
 }

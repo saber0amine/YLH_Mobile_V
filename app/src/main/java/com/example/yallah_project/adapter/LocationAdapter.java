@@ -1,4 +1,4 @@
-    package com.example.yallah_project.activity;
+    package com.example.yallah_project.adapter;
 
     import android.content.Context;
     import android.location.Address;

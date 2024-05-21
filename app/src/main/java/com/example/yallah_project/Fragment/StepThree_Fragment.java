@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yallah_project.R;
-import com.example.yallah_project.activity.LocationAdapter;
+import com.example.yallah_project.adapter.LocationAdapter;
 import com.example.yallah_project.activity.MapsActivity;
 import com.example.yallah_project.viewmodel.UserViewModel;
 import com.example.yallah_project.model.Location;
@@ -121,7 +120,7 @@ public class StepThree_Fragment extends Fragment implements View.OnClickListener
             RequestBody locationsBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), locationsJson);
 
             LiveData<String> response = userViewModel.createActivity(activityBody, imageParts, locationsBody);
-            response.observe(this, s -> serverResult.setText(s));
+            response.observe(this, s -> serverResult.setText(s)   );
         }
     }
 }

@@ -144,7 +144,7 @@ public class StepOne_Fragment extends Fragment implements View.OnClickListener {
         long days = duration.toDays();
         long hours = duration.toHours() % 24;
         long minutes = duration.toMinutes() % 60;
-        activity.setDuration(Long.valueOf(String.format("%d days, %d hours, %d minutes", days, hours, minutes)));
+        activity.setDuration(String.format("%d days, %d hours, %d minutes", days, hours, minutes) )  ;
         activity.setCapacity(Integer.parseInt(editTextCapacity.getText().toString()));
         activity.setMinAge(Integer.parseInt(editTextMinAge.getText().toString()));
         activity.setMaxAge(Integer.parseInt(editTextMaxAge.getText().toString()));

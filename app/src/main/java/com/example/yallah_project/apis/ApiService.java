@@ -23,6 +23,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @POST("/register")
@@ -59,4 +60,8 @@ Call<ResponseBody> switchToOrganisateur(@Part("governmentIdType") RequestBody go
 
     @DELETE("Remove-Activity/{id}")
     Call<ResponseBody> removeActivity(@Path("id") UUID activityId);
+
+    @GET("/activities/filter")
+    Call<List<ActivityDto>> getFilteredActivities(@Query("param1") String s, @Query("param2") String s1);
+
 }

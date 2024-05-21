@@ -19,7 +19,7 @@ import android.widget.Button;
 
 import com.example.yallah_project.R;
 import com.example.yallah_project.activity.FormCreateActivityContainer;
-import com.example.yallah_project.activity.ImageAdapter;
+import com.example.yallah_project.adapter.ImageAdapter;
 import com.example.yallah_project.viewmodel.UserViewModel;
 
 import java.io.File;

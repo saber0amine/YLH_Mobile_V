@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Activity"
+            android:background="@color/black"
             android:textColor="@color/lavender"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -56,6 +57,7 @@
             android:id="@+id/layoutDashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
             android:text="Visualize Your Activities"
             android:textColor="@color/lavender"
             android:textSize="16sp"/>

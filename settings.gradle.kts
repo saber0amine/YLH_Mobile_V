@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     }
 }
 
+
 rootProject.name = "Yallah_Project"
 include(":app")
  

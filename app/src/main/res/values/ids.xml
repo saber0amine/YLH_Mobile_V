@@ -27,5 +27,17 @@
     <item name="registerAge" type="id" />
     <item name="registerErrors" type="id" />
     <item name="registerButton2" type="id" />
+    <item name="messageServer" type="id" />
+    <item name="activity_image_viewpager" type="id" />
+    <item name="button_back" type="id" />
+    <item name="Errors" type="id" />
+    <item name="LoginTitle" type="id" />
+    <item name="identityType" type="id" />
+    <item name="identityCardOption" type="id" />
+    <item name="passportOption" type="id" />
+    <item name="identityImage" type="id" />
+    <item name="uploadButton" type="id" />
+    <item name="uploadLabel" type="id" />
+    <item name="SubmitButton" type="id" />
 
 </resources>

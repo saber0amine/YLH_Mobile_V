@@ -95,7 +95,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
             Log.i("user", user1.toString());
 
             byte[] imageBytes = user1.getProfilePicture();
-            Log.i("imageBytes", imageBytes.toString());
+            //Log.i("imageBytes", imageBytes.toString());
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                 profileImageView.setImageBitmap(bitmap);
                 header_name.setText(user1.getName());
