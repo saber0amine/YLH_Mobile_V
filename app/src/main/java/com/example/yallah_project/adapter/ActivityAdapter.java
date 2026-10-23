@@ -75,7 +75,7 @@ holder.endDate.setText(String.join(", ", activity.getDateOfEnd()));
 
         if (activity.getActivityImages() != null && !activity.getActivityImages().isEmpty()) {
             String imagePath = activity.getActivityImages().get(0).replace("\\", "/");
-            String imageUrl = "https://c067-105-71-133-151.ngrok-free.app/" + imagePath;
+            String imageUrl = com.example.yallah_project.BuildConfig.API_BASE_URL + "/" + imagePath;
             Log.i("gettingActivities", "corected url " + imageUrl);
 
             Glide.with(context)

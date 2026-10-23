@@ -34,7 +34,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     @Override
     public void onBindViewHolder(@NonNull ImageSliderViewHolder holder, int position) {
         String imageUrl = imageUrls.get(position).replace("\\", "/");
-        String fullImageUrl = "https://c067-105-71-133-151.ngrok-free.app/" + imageUrl;
+        String fullImageUrl = com.example.yallah_project.BuildConfig.API_BASE_URL + "/" + imageUrl;
         Glide.with(context)
                 .load(fullImageUrl)
                 .into(holder.imageView);

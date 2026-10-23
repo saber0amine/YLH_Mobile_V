@@ -1,6 +1,16 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
 }
+
+// Secrets and environment-specific values are read from local.properties (not committed)
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+val mapsApiKey: String = localProperties.getProperty("MAPS_API_KEY", "")
+val apiBaseUrl: String = localProperties.getProperty("API_BASE_URL", "http://10.0.2.2:8080")
 
 android {
     namespace = "com.example.yallah_project"
@@ -17,6 +27,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+        resValue("string", "google_maps_key", mapsApiKey)
+        buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
     }
 
     buildTypes {
@@ -29,6 +43,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
 
     }
     compileOptions {
